@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://d4iabxy3kd4g3"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_4iqln"]
+[ext_resource type="Script" path="res://Scripts/gui.gd" id="3_n84hl"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_4iqln")
+
+[node name="GUI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("3_n84hl")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(192000, 108000)
+offset_right = 40.0
+offset_bottom = 40.0
+color = Color(0.330349, 0.350248, 0.375642, 1)
