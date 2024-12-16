@@ -10,9 +10,3 @@ script = ExtResource("1_4iqln")
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("3_n84hl")
-
-[node name="ColorRect" type="ColorRect" parent="."]
-custom_minimum_size = Vector2(192000, 108000)
-offset_right = 40.0
-offset_bottom = 40.0
-color = Color(0.330349, 0.350248, 0.375642, 1)

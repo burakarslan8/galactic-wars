@@ -1,5 +1,5 @@
 class_name Character
-extends Player
+extends Node2D
 
 var _health: float = 100.0
 var _speed: float = 500.0
@@ -37,4 +37,9 @@ func move(direction: Vector2, delta: float) -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	pass
+	rotate_towards_mouse()
+
+func rotate_towards_mouse() -> void:
+	var mouse_position = get_viewport().get_mouse_position()
+	var direction_to_mouse = (get_global_mouse_position() - global_position).normalized()
+	rotation = direction_to_mouse.angle() + PI / 2
