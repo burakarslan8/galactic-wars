@@ -64,6 +64,7 @@ func handle_input(delta: float) -> void:
 		input_vector = input_vector.normalized()
 
 	character.move(input_vector, delta)
+	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
