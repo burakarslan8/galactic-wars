@@ -3,6 +3,7 @@ extends Node
 const PORT: int = 9000
 const MAX_PLAYERS: int = 10
 
+
 func _ready():
 	var peer = ENetMultiplayerPeer.new()
 	var result = peer.create_server(PORT, MAX_PLAYERS)
