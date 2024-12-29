@@ -1,7 +1,7 @@
 class_name Player
 extends Node2D
 
-var _id: String = ""
+var _id: int = 0
 var _email: String = ""
 var _password: String = ""
 var _input: InputEventKey = null
@@ -9,21 +9,21 @@ var _input_mouse: InputEventMouse = null
 
 var character: Character = null
 
-func spawn_character(position_value: Vector2) -> void:
-	character = preload("res://Scenes/Character.tscn").instantiate()
-	add_child(character)
-	
-	character.position = position_value
-
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	var spawn_position = Vector2(100, 100)
-	spawn_character(spawn_position)
+	if multiplayer.get_unique_id() == _id:
+		var spawn_position = Vector2(0, 0)
+		spawn_character(spawn_position)
+
+func spawn_character(position_value: Vector2) -> void:
+	if character == null:
+		character = preload("res://Scenes/Character.tscn").instantiate()
+		add_child(character)
+		character.position = position_value
 
 func get_id():
 	return _id
 
-func set_id(id_value: String):
+func set_id(id_value: int):
 	_id = id_value
 
 func get_email():
@@ -64,8 +64,9 @@ func handle_input(delta: float) -> void:
 		input_vector = input_vector.normalized()
 
 	character.move(input_vector, delta)
-	
+	if multiplayer.get_unique_id() != 1:
+		get_node("/root/Multiplayer").rpc_id(1, "update_player_position", multiplayer.get_unique_id(), character.position)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	handle_input(delta)
+	if multiplayer.get_unique_id() == _id:
+		handle_input(delta)
