@@ -1,6 +1,6 @@
 extends Node
 
-const SERVER_ADDRESS: String = "alienusvpn.duckdns.org"
+const SERVER_ADDRESS: String = "127.0.0.1"
 const SERVER_PORT: int = 9000
 var peer = null
 
@@ -70,7 +70,7 @@ func update_weapon_rotation(peer_id: int, rotation: float):
 	if game_world:
 		var player = game_world.get_player(peer_id)
 		if player and player.character and player.character.weapon:
-			player.character.weapon.rotation = rotation
+			player.character.weapon.rotate_towards_remote(rotation)
 
 @rpc("any_peer")
 func sync_shoot(peer_id: int, position: Vector2, direction: Vector2):

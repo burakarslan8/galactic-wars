@@ -29,23 +29,28 @@ func set_range(range_value: float) -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if should_hide_weapon():
-		hide()
+	if get_parent().get_parent().get_id() == multiplayer.get_unique_id():
+		if should_hide_weapon():
+			hide()
+		else:
+			show()
+			update_local_weapon_position()
+			rotate_towards_mouse()
+		handle_shooting(delta)
 	else:
-		show()
-		update_position()
-		rotate_towards_mouse()
-	handle_shooting(delta)
+		update_remote_weapon_position()
 
-func update_position() -> void:
+func update_local_weapon_position() -> void:
 	var mouse_position = get_global_mouse_position()
 	var character_center = get_parent().global_position
 	var direction_to_mouse = (mouse_position - character_center).normalized()
-	var angle_to_mouse = direction_to_mouse.angle()
-
-	var offset_x = ROTATION_RADIUS * cos(angle_to_mouse)
-	var offset_y = ROTATION_RADIUS * sin(angle_to_mouse)
+	var offset_x = ROTATION_RADIUS * cos(direction_to_mouse.angle())
+	var offset_y = ROTATION_RADIUS * sin(direction_to_mouse.angle())
 	position = Vector2(offset_x, offset_y)
+
+func update_remote_weapon_position() -> void:
+	var direction_vector = Vector2.RIGHT.rotated(rotation)
+	position = direction_vector * ROTATION_RADIUS
 
 func rotate_towards_mouse() -> void:
 	var mouse_position = get_global_mouse_position()
@@ -56,6 +61,9 @@ func rotate_towards_mouse() -> void:
 	if multiplayer.get_unique_id() != 1:
 		get_node("/root/Multiplayer").rpc_id(1, "update_weapon_rotation", multiplayer.get_unique_id(), rotation)
 
+func rotate_towards_remote(rotation_value: float):
+	rotation = rotation_value
+	update_remote_weapon_position()
 
 func should_hide_weapon() -> bool:
 	var mouse_position = get_global_mouse_position()

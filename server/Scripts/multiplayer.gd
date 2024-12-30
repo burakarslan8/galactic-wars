@@ -59,11 +59,11 @@ func synchronize_position(peer_id: int, position: Vector2):
 
 @rpc("any_peer")
 func update_weapon_rotation(peer_id: int, rotation: float):
-	rpc("update_weapon_rotation", peer_id, rotation)
+	rpc_id(0, "update_weapon_rotation", peer_id, rotation)
 
 @rpc("any_peer")
 func sync_shoot(peer_id: int, position: Vector2, direction: Vector2):
-	rpc("sync_shoot", peer_id, position, direction)
+	rpc_id(0, "sync_shoot", peer_id, position, direction)
 
 @rpc("any_peer")
 func register_bullet(peer_id: int, bullet_id: int, position: Vector2, direction: Vector2):
