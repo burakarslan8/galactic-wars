@@ -63,3 +63,40 @@ func synchronize_position(peer_id: int, position: Vector2):
 	var game_world = get_node("/root/Main/GameWorld")
 	if game_world:
 		game_world.update_player_position(peer_id, position)
+
+@rpc("any_peer")
+func update_weapon_rotation(peer_id: int, rotation: float):
+	var game_world = get_node("/root/Main/GameWorld")
+	if game_world:
+		var player = game_world.get_player(peer_id)
+		if player and player.character and player.character.weapon:
+			player.character.weapon.rotation = rotation
+
+@rpc("any_peer")
+func sync_shoot(peer_id: int, position: Vector2, direction: Vector2):
+	var game_world = get_node("/root/Main/GameWorld")
+	if game_world:
+		var player = game_world.get_player(peer_id)
+		if player and player.character and player.character.weapon:
+			player.character.weapon.spawn_bullet(position, direction)
+
+@rpc("any_peer")
+func sync_bullet_position(peer_id: int, bullet_id: int, position: Vector2):
+	var game_world = get_node("/root/Main/GameWorld")
+	if game_world:
+		game_world.update_bullet_position(bullet_id, position)
+
+@rpc("any_peer")
+func register_bullet(peer_id: int, bullet_id: int, position: Vector2, direction: Vector2):
+	var game_world = get_node("/root/Main/GameWorld")
+	if game_world:
+		if bullet_id in game_world.bullets:
+			print("Bullet with ID: ", bullet_id, " already exists.")
+			return
+		game_world.add_bullet(bullet_id, position, direction)
+
+@rpc("any_peer")
+func sync_remove_bullet(bullet_id: int):
+	var game_world = get_node("/root/Main/GameWorld")
+	if game_world:
+		game_world.remove_bullet(bullet_id)

@@ -53,6 +53,10 @@ func rotate_towards_mouse() -> void:
 	var direction_to_mouse = (mouse_position - character_center).normalized()
 	rotation = direction_to_mouse.angle()
 
+	if multiplayer.get_unique_id() != 1:
+		get_node("/root/Multiplayer").rpc_id(1, "update_weapon_rotation", multiplayer.get_unique_id(), rotation)
+
+
 func should_hide_weapon() -> bool:
 	var mouse_position = get_global_mouse_position()
 	var character_center = get_parent().global_position
@@ -67,8 +71,17 @@ func handle_shooting(delta: float) -> void:
 		time_since_last_shot = 0.0
 
 func shoot() -> void:
+	if multiplayer.get_unique_id() != 1:
+		get_node("/root/Multiplayer").rpc_id(1, "sync_shoot", multiplayer.get_unique_id(), global_position, Vector2.RIGHT.rotated(global_rotation))
+
+	spawn_bullet(global_position, Vector2.RIGHT.rotated(global_rotation))
+
+func spawn_bullet(position: Vector2, direction: Vector2):
 	var bullet_scene = preload("res://Scenes/Bullet.tscn")
 	var bullet = bullet_scene.instantiate()
 	get_tree().root.add_child(bullet)
-	bullet.global_position = global_position
-	bullet.initialize_bullet(Vector2.RIGHT.rotated(global_rotation), self)
+	bullet.global_position = position
+	bullet.initialize_bullet(direction, self)
+	
+	if multiplayer.get_unique_id() != 1:
+		get_node("/root/Multiplayer").rpc_id(1, "register_bullet", multiplayer.get_unique_id(), bullet.get_instance_id(), position, direction)
