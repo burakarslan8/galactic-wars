@@ -1,10 +1,63 @@
-[gd_scene load_steps=2 format=3 uid="uid://dujoxn7d1lle0"]
+[gd_scene load_steps=5 format=3 uid="uid://dujoxn7d1lle0"]
 
-[ext_resource type="Script" path="res://Scripts/lobby_manager.gd" id="1_sw1wv"]
+[ext_resource type="Script" path="res://Scripts/lobby_browser.gd" id="1_na1x3"]
 
-[node name="LobbyBrowser" type="Node2D"]
-script = ExtResource("1_sw1wv")
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6ng5k"]
+bg_color = Color(0.301961, 0.301961, 0.301961, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.158105, 0.168953, 0.162488, 1)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-offset_right = 40.0
-offset_bottom = 40.0
+[sub_resource type="Theme" id="Theme_k8dmh"]
+default_font_size = 104
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ygijd"]
+bg_color = Color(0.362829, 0.36283, 0.362829, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.299327, 0.305294, 0.299327, 1)
+
+[node name="LobbyBrowser" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_na1x3")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 168.0
+offset_right = 1493.0
+offset_bottom = 1046.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_6ng5k")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+layout_mode = 2
+
+[node name="AvailableLobbiesLabel" type="Label" parent="."]
+layout_mode = 0
+offset_right = 1491.0
+offset_bottom = 168.0
+theme = SubResource("Theme_k8dmh")
+theme_override_styles/normal = SubResource("StyleBoxFlat_ygijd")
+text = " Active Lobbies"
+
+[node name="CreateLobbyButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 1493.0
+offset_top = 168.0
+offset_right = 1679.0
+offset_bottom = 333.0
+text = "Create a lobby"
+
+[node name="RefreshButton" type="Button" parent="."]
+z_index = 2
+layout_mode = 0
+offset_left = 1493.0
+offset_top = 1.0
+offset_right = 1679.0
+offset_bottom = 168.0
+text = "Refresh"

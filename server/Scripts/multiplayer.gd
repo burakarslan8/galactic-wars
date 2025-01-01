@@ -4,6 +4,9 @@ var peer = null
 var players_state = {}
 var bullets_state = {}
 
+var lobbies = {}
+var lobby_id_counter = 1
+
 
 func _ready():
 	start_server()
@@ -123,3 +126,55 @@ func receive_login_result(success: bool):
 		print("Login successful on server (symmetry placeholder).")
 	else:
 		print("Invalid credentials on server (symmetry placeholder).")
+
+@rpc("any_peer")
+func create_lobby():
+	var sender_id = get_tree().get_multiplayer().get_remote_sender_id()
+	var lobby_id = lobby_id_counter
+	lobby_id_counter += 1
+
+	lobbies[lobby_id] = {"id": lobby_id, "host": sender_id, "players": [sender_id], "max_players": 4}
+	print("Lobby created with ID: ", lobby_id, " by Peer: ", sender_id)
+	rpc_id(sender_id, "lobby_created", lobby_id)
+
+@rpc("any_peer")
+func join_lobby(lobby_id: int):
+	var sender_id = get_tree().get_multiplayer().get_remote_sender_id()
+	if lobbies.has(lobby_id):
+		var lobby = lobbies[lobby_id]
+		if lobby["players"].size() < lobby["max_players"]:
+			lobby["players"].append(sender_id)
+			print("Peer ", sender_id, " joined Lobby ", lobby_id)
+			rpc_id(sender_id, "lobby_joined", lobby_id)
+		else:
+			print("Lobby is full: ", lobby_id)
+			rpc_id(sender_id, "lobby_full", lobby_id)
+	else:
+		print("Lobby not found: ", lobby_id)
+		rpc_id(sender_id, "lobby_not_found", lobby_id)
+
+@rpc("any_peer")
+func get_lobbies():
+	rpc_id(get_tree().get_multiplayer().get_remote_sender_id(), "receive_lobby_list", lobbies.values())
+
+@rpc("any_peer")
+func lobby_created(lobby_id: int):
+	# Placeholder for symmetry
+	print("Lobby created callback on server (placeholder): ", lobby_id)
+
+@rpc("any_peer")
+func lobby_joined(lobby_id: int):
+	# Placeholder for symmetry
+	print("Lobby joined callback on server (placeholder): ", lobby_id)
+
+@rpc("any_peer")
+func lobby_full(lobby_id: int):
+	print("Lobby full callback on server (placeholder): ", lobby_id)
+
+@rpc("any_peer")
+func lobby_not_found(lobby_id: int):
+	print("Lobby not found callback on server (placeholder): ", lobby_id)
+
+@rpc("any_peer")
+func receive_lobby_list(lobbies: Array):
+	print("Receive lobby list callback on server (placeholder).")

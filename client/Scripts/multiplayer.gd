@@ -100,3 +100,42 @@ func receive_login_result(success: bool):
 		get_tree().get_root().get_node("Main").on_login_success()
 	else:
 		print("Invalid credentials.")
+
+@rpc("any_peer")
+func create_lobby():
+	# Placeholder for symmetry
+	print("Create lobby called on client (placeholder).")
+
+@rpc("any_peer")
+func join_lobby(lobby_id: int):
+	# Placeholder for symmetry
+	print("Join lobby called on client (placeholder).")
+
+@rpc("any_peer")
+func get_lobbies():
+	print("Get lobbies called on client (placeholder).")
+
+@rpc("any_peer")
+func lobby_created(lobby_id: int):
+	print("Lobby created successfully with ID: ", lobby_id)
+
+@rpc("any_peer")
+func lobby_joined(lobby_id: int):
+	print("Successfully joined Lobby ID: ", lobby_id)
+
+@rpc("any_peer")
+func lobby_full(lobby_id: int):
+	print("Lobby is full: ", lobby_id)
+
+@rpc("any_peer")
+func lobby_not_found(lobby_id: int):
+	print("Lobby not found: ", lobby_id)
+
+@rpc("any_peer")
+func receive_lobby_list(lobbies: Array):
+	print("Received lobby list from server: ", lobbies)
+	var lobby_browser = get_node("/root/Main/LobbyBrowser")
+	if lobby_browser:
+		lobby_browser.update_lobbies(lobbies)
+	else:
+		print("Error: LobbyBrowser node not found!")

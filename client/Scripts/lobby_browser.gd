@@ -1,27 +1,51 @@
 extends Control
 
 @onready var lobby_list = $ScrollContainer/VBoxContainer
+@onready var create_lobby_button = $CreateLobbyButton
+@onready var refresh_button = $RefreshButton
 
 func _ready():
-	var lobby_manager = get_node("/root/LobbyManager")
-	lobby_manager.connect("lobbies_updated",Callable(self, "_update_lobby_list"))
-	lobby_manager.fetch_lobbies()
+	create_lobby_button.connect("pressed", Callable(self, "_on_create_lobby_pressed"))
+	refresh_button.connect("pressed", Callable(self, "_on_refresh_pressed"))
+	fetch_lobbies()
 
-func _update_lobby_list():
-	lobby_list.clear_children() # Utility function to clear old entries
-	var lobby_manager = get_node("/root/LobbyManager")
-	for lobby in lobby_manager.lobbies:
-		var button = Button.new()
-		button.text = "%s (%s)" % [lobby["name"], lobby["players"]]
-		button.connect("pressed", Callable(self, "_join_lobby", [lobby]))
-		lobby_list.add_child(button)
+func fetch_lobbies():
+	print("Requesting lobbies from server...")
+	var multiplayer = get_node("/root/Multiplayer")
+	if multiplayer:
+		multiplayer.rpc_id(1, "get_lobbies")
+	else:
+		print("Error: Multiplayer node not found!")
 
-func _join_lobby(lobby):
-	# Handle joining the selected lobby
-	print("Joining: ", lobby["name"])
+func update_lobbies(lobbies: Array):
+	print("Updating lobby browser with lobbies: ", lobbies)
+	for child in lobby_list.get_children():
+		child.queue_free()
 
-func _on_create_lobby_button_pressed():
-	# Transition to a new lobby creation scene or send an RPC to create one
-	print("Creating new lobby...")
-	# Example: RPC call to create a new lobby
-	get_tree().change_scene("res://LobbyCreate.tscn")
+	for lobby in lobbies:
+		add_lobby_entry(lobby)
+
+func add_lobby_entry(lobby_data):
+	print("Adding lobby to UI: ", lobby_data)
+	var button = Button.new()
+	button.text = "%s (%s)" % [lobby_data["id"], lobby_data["players"]]
+	button.connect("pressed", Callable(self, "_on_lobby_selected").bind(lobby_data))
+	lobby_list.add_child(button)
+
+# When a lobby is selected
+func _on_lobby_selected(lobby_data):
+	print("Joining lobby: ", lobby_data["id"])
+	# Call server logic to join the lobby
+	var multiplayer = get_node("/root/Multiplayer")
+	multiplayer.rpc_id(1, "join_lobby", lobby_data["id"])
+
+# When "Create Lobby" is pressed
+func _on_create_lobby_pressed():
+	print("Creating a new lobby...")
+	var multiplayer = get_node("/root/Multiplayer")
+	multiplayer.rpc_id(1, "create_lobby")
+
+# When "Refresh" is pressed
+func _on_refresh_pressed():
+	print("Refreshing lobby list...")
+	fetch_lobbies()
