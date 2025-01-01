@@ -6,6 +6,7 @@ var bullets_state = {}
 
 var lobbies = {}
 var lobby_id_counter = 1
+var peer_to_user = {}
 
 
 func _ready():
@@ -29,6 +30,9 @@ func _on_peer_disconnected(id: int):
 	print("Peer disconnected with ID: ", id)
 	players_state.erase(id)
 	rpc("remove_player", id)
+	if peer_to_user.has(id):
+		print("Removing mapping for Peer ID: ", id, " (User ID: ", peer_to_user[id], ")")
+		peer_to_user.erase(id)
 
 @rpc("any_peer")
 func remove_player(peer_id: int):
@@ -117,8 +121,15 @@ func handle_login(username: String, password: String):
 		rpc_id(get_tree().get_multiplayer().get_remote_sender_id(), "receive_login_result", false)
 		return
 
-	var is_valid = db_node.verify_user(username, password)
-	rpc_id(get_tree().get_multiplayer().get_remote_sender_id(), "receive_login_result", is_valid)
+	var user_id = db_node.get_user_id(username, password)
+	if user_id > 0:
+		var peer_id = get_tree().get_multiplayer().get_remote_sender_id()
+		peer_to_user[peer_id] = user_id
+		print("Login successful for user: ", username, " (User ID: ", user_id, ", Peer ID: ", peer_id, ")")
+		rpc_id(peer_id, "receive_login_result", true)
+	else:
+		print("Login failed for user: ", username)
+		rpc_id(get_tree().get_multiplayer().get_remote_sender_id(), "receive_login_result", false)
 
 @rpc("any_peer")
 func receive_login_result(success: bool):
@@ -129,33 +140,57 @@ func receive_login_result(success: bool):
 
 @rpc("any_peer")
 func create_lobby():
-	var sender_id = get_tree().get_multiplayer().get_remote_sender_id()
+	var peer_id = get_tree().get_multiplayer().get_remote_sender_id()
+	var user_id = get_user_id_from_peer(peer_id)
+	var username = Database.get_username_by_id(user_id)
+
 	var lobby_id = lobby_id_counter
 	lobby_id_counter += 1
 
-	lobbies[lobby_id] = {"id": lobby_id, "host": sender_id, "players": [sender_id], "max_players": 4}
-	print("Lobby created with ID: ", lobby_id, " by Peer: ", sender_id)
-	rpc_id(sender_id, "lobby_created", lobby_id)
+	lobbies[lobby_id] = {
+		"id": lobby_id,
+		"host": user_id,
+		"host_username": username,
+		"players": [user_id],
+		"max_players": 4
+	}
+
+	print("Lobby created with ID: ", lobby_id, " by User: ", username, " (User ID: ", user_id, ")")
+	rpc_id(peer_id, "lobby_created", lobby_id)
 
 @rpc("any_peer")
 func join_lobby(lobby_id: int):
-	var sender_id = get_tree().get_multiplayer().get_remote_sender_id()
+	var peer_id = get_tree().get_multiplayer().get_remote_sender_id()
+	var user_id = get_user_id_from_peer(peer_id)
+	if user_id < 0:
+		print("Error: Could not find user for Peer ID: ", peer_id)
+		rpc_id(peer_id, "lobby_join_failed", "User not logged in.")
+		return
+
 	if lobbies.has(lobby_id):
 		var lobby = lobbies[lobby_id]
 		if lobby["players"].size() < lobby["max_players"]:
-			lobby["players"].append(sender_id)
-			print("Peer ", sender_id, " joined Lobby ", lobby_id)
-			rpc_id(sender_id, "lobby_joined", lobby_id)
+			lobby["players"].append(user_id)
+			print("User ID: ", user_id, " joined Lobby ID: ", lobby_id)
+			rpc_id(peer_id, "lobby_joined", lobby_id)
 		else:
 			print("Lobby is full: ", lobby_id)
-			rpc_id(sender_id, "lobby_full", lobby_id)
+			rpc_id(peer_id, "lobby_full", lobby_id)
 	else:
 		print("Lobby not found: ", lobby_id)
-		rpc_id(sender_id, "lobby_not_found", lobby_id)
+		rpc_id(peer_id, "lobby_not_found", lobby_id)
 
 @rpc("any_peer")
 func get_lobbies():
-	rpc_id(get_tree().get_multiplayer().get_remote_sender_id(), "receive_lobby_list", lobbies.values())
+	var lobby_data = []
+	for lobby in lobbies.values():
+		lobby_data.append({
+			"id": lobby["id"],
+			"host_username": lobby.get("host_username", "Unknown"),
+			"players": lobby["players"],
+			"max_players": lobby["max_players"]
+		})
+	rpc_id(get_tree().get_multiplayer().get_remote_sender_id(), "receive_lobby_list", lobby_data)
 
 @rpc("any_peer")
 func lobby_created(lobby_id: int):
@@ -178,3 +213,14 @@ func lobby_not_found(lobby_id: int):
 @rpc("any_peer")
 func receive_lobby_list(lobbies: Array):
 	print("Receive lobby list callback on server (placeholder).")
+
+func get_user_id_from_peer(peer_id: int) -> int:
+	if peer_to_user.has(peer_id):
+		return peer_to_user[peer_id]
+	return -1
+
+func get_peer_id_from_user(user_id: int) -> int:
+	for peer_id in peer_to_user.keys():
+		if peer_to_user[peer_id] == user_id:
+			return peer_id
+	return -1
