@@ -19,6 +19,11 @@ config/icon="res://Assets/icon.svg"
 
 Multiplayer="*res://Scripts/multiplayer.gd"
 
+[display]
+
+window/size/viewport_width=1680
+window/size/viewport_height=1050
+
 [editor]
 
 version_control/plugin_name="GitPlugin"

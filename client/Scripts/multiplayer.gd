@@ -19,12 +19,6 @@ func connect_to_server():
 	else:
 		print("Failed to connect to server. Error code: ", result)
 
-func _on_peer_connected(id):
-	print("Peer connected with ID: ", id)
-
-func _on_peer_disconnected(id):
-	print("Peer disconnected with ID: ", id)
-
 func _on_connected_to_server():
 	print("Successfully connected to the server.")
 
@@ -33,17 +27,6 @@ func _on_connection_failed():
 
 func _on_server_disconnected():
 	print("Disconnected from the server.")
-
-@rpc("any_peer")
-func broadcast_spawn_player(peer_id: int, spawn_position: Vector2):
-	var game_world = get_node("/root/Main/GameWorld")
-	if game_world:
-		if peer_id in game_world.players:
-			print("Player with Peer ID already exists: ", peer_id)
-			return
-		
-		print("Spawning player with Peer ID: ", peer_id, " at position: ", spawn_position)
-		game_world.add_player(peer_id, spawn_position)
 
 @rpc("any_peer")
 func remove_player(peer_id: int):
@@ -100,3 +83,20 @@ func sync_remove_bullet(bullet_id: int):
 	var game_world = get_node("/root/Main/GameWorld")
 	if game_world:
 		game_world.remove_bullet(bullet_id)
+
+@rpc("any_peer")
+func handle_register(username: String, email: String, password: String) -> bool:
+	print("handle_register called on client (placeholder).")
+	return true
+
+@rpc("any_peer")
+func handle_login(username: String, password: String) -> bool:
+	print("handle_login called on client (placeholder).")
+	return true
+
+@rpc("any_peer")
+func receive_login_result(success: bool):
+	if success:
+		get_tree().get_root().get_node("Main").on_login_success()
+	else:
+		print("Invalid credentials.")

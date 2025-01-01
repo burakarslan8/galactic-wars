@@ -22,26 +22,10 @@ func start_server():
 func _on_peer_connected(id: int):
 	print("Peer connected with ID: ", id)
 
-	var rng = RandomNumberGenerator.new()
-	var spawn_position = Vector2(rng.randf_range(100, 500), rng.randf_range(100, 500))
-
-	players_state[id] = {"position": spawn_position}
-
-	rpc("broadcast_spawn_player", id, spawn_position)
-
-	for existing_peer_id in players_state.keys():
-		if existing_peer_id != id:
-			var existing_position = players_state[existing_peer_id]["position"]
-			rpc_id(id, "broadcast_spawn_player", existing_peer_id, existing_position)
-
 func _on_peer_disconnected(id: int):
 	print("Peer disconnected with ID: ", id)
 	players_state.erase(id)
 	rpc("remove_player", id)
-
-@rpc("any_peer")
-func broadcast_spawn_player(peer_id: int, spawn_position: Vector2):
-	print("Spawning player for Peer ID: ", peer_id, " at position: ", spawn_position)
 
 @rpc("any_peer")
 func remove_player(peer_id: int):
@@ -111,3 +95,31 @@ func apply_damage_to_player(target_peer_id: int, shooter_peer_id: int):
 			print("Player ", target_peer_id, " was eliminated by Player ", shooter_peer_id)
 			rpc("remove_player", target_peer_id)
 			players_state.erase(target_peer_id)
+
+@rpc("any_peer")
+func handle_register(username: String, email: String, password: String) -> bool:
+	var db_node = Database
+	if db_node and db_node.register_user(username, email, password):
+		print("Registration successful for: ", username)
+		return true
+	else:
+		print("Failed to register user: ", username)
+		return false
+
+@rpc("any_peer")
+func handle_login(username: String, password: String):
+	var db_node = Database
+	if not db_node:
+		print("Database autoload not found.")
+		rpc_id(get_tree().get_multiplayer().get_remote_sender_id(), "receive_login_result", false)
+		return
+
+	var is_valid = db_node.verify_user(username, password)
+	rpc_id(get_tree().get_multiplayer().get_remote_sender_id(), "receive_login_result", is_valid)
+
+@rpc("any_peer")
+func receive_login_result(success: bool):
+	if success:
+		print("Login successful on server (symmetry placeholder).")
+	else:
+		print("Invalid credentials on server (symmetry placeholder).")
