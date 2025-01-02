@@ -1,0 +1,73 @@
+[gd_scene load_steps=4 format=3 uid="uid://rehv5yw0umpd"]
+
+[ext_resource type="Script" path="res://Scripts/Main.gd" id="1_s1ueb"]
+[ext_resource type="Texture2D" uid="uid://d4lg0otml5xas" path="res://Assets/environment/galacticWars.png" id="2_d3rg5"]
+
+[sub_resource type="GDScript" id="GDScript_oqsna"]
+script/source = "extends Node2D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+"
+
+[node name="Main" type="Node2D"]
+script = SubResource("GDScript_oqsna")
+
+[node name="Control" type="Control" parent="."]
+z_index = 1
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_s1ueb")
+
+[node name="Sprite2D" type="Sprite2D" parent="Control"]
+z_index = 1
+scale = Vector2(1.6183, 1.80859)
+texture = ExtResource("2_d3rg5")
+centered = false
+
+[node name="Control2" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Button" type="Button" parent="."]
+z_index = 2
+z_as_relative = false
+offset_left = 1306.0
+offset_top = 787.0
+offset_right = 1706.0
+offset_bottom = 987.0
+theme_override_font_sizes/font_size = 64
+text = "Play"
+
+[node name="SettingsButton" type="Button" parent="."]
+z_index = 2
+offset_left = 1306.0
+offset_top = 1031.0
+offset_right = 1706.0
+offset_bottom = 1231.0
+theme_override_font_sizes/font_size = 64
+text = "Settings"
+
+[node name="ExitButton" type="Button" parent="."]
+z_index = 2
+offset_left = 1304.0
+offset_top = 1293.0
+offset_right = 1704.0
+offset_bottom = 1493.0
+theme_override_font_sizes/font_size = 64
+text = "Exit"
+
+[connection signal="pressed" from="Button" to="Control" method="_on_button_pressed"]
+[connection signal="pressed" from="SettingsButton" to="Control" method="_on_SettingsButton_pressed"]
+[connection signal="pressed" from="ExitButton" to="Control" method="_on_ExitButton_pressed"]
