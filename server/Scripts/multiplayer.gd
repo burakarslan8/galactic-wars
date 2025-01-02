@@ -163,7 +163,6 @@ func join_lobby(lobby_id: int):
 	var peer_id = get_tree().get_multiplayer().get_remote_sender_id()
 	var user_id = get_user_id_from_peer(peer_id)
 	if user_id < 0:
-		print("Error: Could not find user for Peer ID: ", peer_id)
 		rpc_id(peer_id, "lobby_join_failed", "User not logged in.")
 		return
 
@@ -171,14 +170,29 @@ func join_lobby(lobby_id: int):
 		var lobby = lobbies[lobby_id]
 		if lobby["players"].size() < lobby["max_players"]:
 			lobby["players"].append(user_id)
-			print("User ID: ", user_id, " joined Lobby ID: ", lobby_id)
-			rpc_id(peer_id, "lobby_joined", lobby_id)
+			rpc_id(peer_id, "joined_lobby", lobby_id, lobby["players"])
+			broadcast_lobby_update(lobby_id)
 		else:
-			print("Lobby is full: ", lobby_id)
 			rpc_id(peer_id, "lobby_full", lobby_id)
 	else:
-		print("Lobby not found: ", lobby_id)
 		rpc_id(peer_id, "lobby_not_found", lobby_id)
+
+@rpc("any_peer")
+func leave_lobby(lobby_id: int):
+	var peer_id = get_tree().get_multiplayer().get_remote_sender_id()
+	var user_id = get_user_id_from_peer(peer_id)
+	if lobbies.has(lobby_id) and user_id in lobbies[lobby_id]["players"]:
+		lobbies[lobby_id]["players"].erase(user_id)
+		rpc_id(peer_id, "left_lobby", lobby_id)
+		broadcast_lobby_update(lobby_id)
+
+		if lobbies[lobby_id]["players"] == []:
+			lobbies.erase(lobby_id)
+
+func broadcast_lobby_update(lobby_id: int):
+	if lobbies.has(lobby_id):
+		var lobby = lobbies[lobby_id]
+		rpc("update_lobby_users", lobby_id, lobby["players"])
 
 @rpc("any_peer")
 func get_lobbies():
@@ -192,28 +206,6 @@ func get_lobbies():
 		})
 	rpc_id(get_tree().get_multiplayer().get_remote_sender_id(), "receive_lobby_list", lobby_data)
 
-@rpc("any_peer")
-func lobby_created(lobby_id: int):
-	# Placeholder for symmetry
-	print("Lobby created callback on server (placeholder): ", lobby_id)
-
-@rpc("any_peer")
-func lobby_joined(lobby_id: int):
-	# Placeholder for symmetry
-	print("Lobby joined callback on server (placeholder): ", lobby_id)
-
-@rpc("any_peer")
-func lobby_full(lobby_id: int):
-	print("Lobby full callback on server (placeholder): ", lobby_id)
-
-@rpc("any_peer")
-func lobby_not_found(lobby_id: int):
-	print("Lobby not found callback on server (placeholder): ", lobby_id)
-
-@rpc("any_peer")
-func receive_lobby_list(lobbies: Array):
-	print("Receive lobby list callback on server (placeholder).")
-
 func get_user_id_from_peer(peer_id: int) -> int:
 	if peer_to_user.has(peer_id):
 		return peer_to_user[peer_id]
@@ -224,3 +216,37 @@ func get_peer_id_from_user(user_id: int) -> int:
 		if peer_to_user[peer_id] == user_id:
 			return peer_id
 	return -1
+
+@rpc("any_peer")
+func joined_lobby(lobby_id: int, users: Array):
+	print("Joined lobby: ", lobby_id)
+	get_node("/root/Main").go_to_lobby(lobby_id, users)
+
+@rpc("any_peer")
+func lobby_created(lobby_id: int):
+	print("Lobby created successfully with ID: ", lobby_id)
+	var multiplayer = get_node("/root/Multiplayer")
+	multiplayer.rpc_id(1, "join_lobby", lobby_id)  # Automatically join after creating
+
+@rpc("any_peer")
+func update_lobby_users(lobby_id: int, users: Array):
+	print("Lobby %d user list updated: " % lobby_id, users)
+	var lobby_scene = get_node("/root/Main/Lobby")
+	if lobby_scene:
+		lobby_scene.update_lobby(lobby_id, users)
+	else:
+		print("Lobby scene not found.")
+
+@rpc("any_peer")
+func left_lobby(lobby_id: int):
+	print("Left lobby: ", lobby_id)
+	get_node("/root/Main").go_to_lobby_browser()
+
+@rpc("any_peer")
+func receive_lobby_list(lobbies: Array):
+	print("Received lobby list from server: ", lobbies)
+	var lobby_browser = get_node("/root/Main/LobbyBrowser")
+	if lobby_browser:
+		lobby_browser.update_lobbies(lobbies)
+	else:
+		print("LobbyBrowser node not found!")

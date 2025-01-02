@@ -14,6 +14,7 @@ offset_right = 40.0
 offset_bottom = 23.0
 
 [node name="UsernameInput" type="LineEdit" parent="."]
+layout_mode = 0
 offset_left = 620.0
 offset_top = 280.0
 offset_right = 1120.0
@@ -23,6 +24,7 @@ placeholder_text = "Username"
 alignment = 1
 
 [node name="EmailInput" type="LineEdit" parent="."]
+layout_mode = 0
 offset_left = 620.0
 offset_top = 380.0
 offset_right = 1120.0
@@ -32,6 +34,7 @@ placeholder_text = "Email"
 alignment = 1
 
 [node name="PasswordInput" type="LineEdit" parent="."]
+layout_mode = 0
 offset_left = 620.0
 offset_top = 480.0
 offset_right = 1120.0
@@ -42,6 +45,7 @@ alignment = 1
 secret = true
 
 [node name="ConfirmPasswordInput" type="LineEdit" parent="."]
+layout_mode = 0
 offset_left = 620.0
 offset_top = 580.0
 offset_right = 1120.0
@@ -52,6 +56,7 @@ alignment = 1
 secret = true
 
 [node name="RegisterButton" type="Button" parent="."]
+layout_mode = 0
 offset_left = 745.0
 offset_top = 720.0
 offset_right = 995.0

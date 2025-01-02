@@ -103,33 +103,15 @@ func receive_login_result(success: bool):
 
 @rpc("any_peer")
 func create_lobby():
-	# Placeholder for symmetry
 	print("Create lobby called on client (placeholder).")
 
 @rpc("any_peer")
 func join_lobby(lobby_id: int):
-	# Placeholder for symmetry
 	print("Join lobby called on client (placeholder).")
 
 @rpc("any_peer")
 func get_lobbies():
 	print("Get lobbies called on client (placeholder).")
-
-@rpc("any_peer")
-func lobby_created(lobby_id: int):
-	print("Lobby created successfully with ID: ", lobby_id)
-
-@rpc("any_peer")
-func lobby_joined(lobby_id: int):
-	print("Successfully joined Lobby ID: ", lobby_id)
-
-@rpc("any_peer")
-func lobby_full(lobby_id: int):
-	print("Lobby is full: ", lobby_id)
-
-@rpc("any_peer")
-func lobby_not_found(lobby_id: int):
-	print("Lobby not found: ", lobby_id)
 
 @rpc("any_peer")
 func receive_lobby_list(lobbies: Array):
@@ -139,3 +121,34 @@ func receive_lobby_list(lobbies: Array):
 		lobby_browser.update_lobbies(lobbies)
 	else:
 		print("Error: LobbyBrowser node not found!")
+
+@rpc("any_peer")
+func joined_lobby(lobby_id: int, users: Array):
+	print("Joined lobby: ", lobby_id)
+	get_node("/root/Main").go_to_lobby(lobby_id, users)
+
+@rpc("any_peer")
+func lobby_created(lobby_id: int):
+	print("Lobby created successfully with ID: ", lobby_id)
+	var multiplayer = get_node("/root/Multiplayer")
+	multiplayer.rpc_id(1, "join_lobby", lobby_id)  # Automatically join after creating
+
+@rpc("any_peer")
+func left_lobby(lobby_id: int):
+	print("Left lobby: ", lobby_id)
+	get_node("/root/Main").go_to_lobby_browser()
+
+@rpc("any_peer")
+func update_lobby_users(lobby_id: int, users: Array):
+	print("Lobby %d user list updated: " % lobby_id, users)
+	
+	var lobby_scene = get_node("/root/Main/Lobby")  # Try to get the Lobby node
+	if lobby_scene:
+		lobby_scene.update_lobby(lobby_id, users)
+	else:
+		print("Error: Lobby scene is not instantiated or not at the expected path.")
+
+
+@rpc("any_peer")
+func leave_lobby(lobby_id: int):
+	print("Placeholder on client: leave_lobby called.")
