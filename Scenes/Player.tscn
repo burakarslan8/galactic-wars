@@ -1,10 +1,26 @@
-[gd_scene load_steps=4 format=3 uid="uid://d2j8xaq24vu07"]
+[gd_scene load_steps=6 format=3 uid="uid://d2j8xaq24vu07"]
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_4fv6r"]
 [ext_resource type="Texture2D" uid="uid://c3ocvp1x4g4gt" path="res://Assets/upscaled_main_ship.png" id="2_c4uo0"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8dd8n"]
 radius = 152.591
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wfk7k"]
+bg_color = Color(0.815791, 0.0864511, 0.142522, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vmve7"]
+bg_color = Color(0.0705882, 0.74902, 0, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0, 0, 0, 1)
 
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 4
@@ -19,8 +35,12 @@ position = Vector2(-2, 27)
 shape = SubResource("CircleShape2D_8dd8n")
 
 [node name="ProgressBar" type="ProgressBar" parent="."]
-offset_right = 4.0
-offset_bottom = 27.0
+offset_left = -137.0
+offset_top = 118.0
+offset_right = 135.0
+offset_bottom = 145.0
+theme_override_styles/background = SubResource("StyleBoxFlat_wfk7k")
+theme_override_styles/fill = SubResource("StyleBoxFlat_vmve7")
+value = 50.0
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(0.5, 0.5)

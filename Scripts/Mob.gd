@@ -1,13 +1,17 @@
 extends Area2D
 
-@export var health: int = 50
+@export var health: int = 10
 @export var damage: int = 10
 @export var speed: float = 500
 var player: Node2D = null
+@onready var health_bar = $ProgressBar
+
 
 func _ready():
 	add_to_group("Mobs")
 	self.body_entered.connect(_on_body_entered)
+	health_bar.max_value = health
+	health_bar.value = health
 
 func _process(delta):
 	if not player:
@@ -18,6 +22,7 @@ func _process(delta):
 
 func take_damage(amount: int):
 	health -= amount
+	health_bar.value = health
 	if health <= 0:
 		die()
 

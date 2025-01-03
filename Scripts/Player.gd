@@ -4,11 +4,14 @@ var speed = 700
 var health = 100
 var camera: Camera2D = null
 var weapon: Weapon = null
+@onready var health_bar = $ProgressBar
 
 func _ready() -> void:
 	camera = $Camera2D
 	if camera:
 		print("Camera attached to character")
+	health_bar.max_value = health
+	health_bar.value = health
 	equip_weapon()
 
 func spawn_character(spawn_position: Vector2):
@@ -29,6 +32,7 @@ func _process(delta):
 
 func take_damage(amount):
 	health -= amount
+	health_bar.value = health
 	if health <= 0:
 		die()
 

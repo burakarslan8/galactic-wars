@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://rehv5yw0umpd"]
 
 [ext_resource type="Script" path="res://Scripts/Main.gd" id="1_s1ueb"]
-[ext_resource type="Texture2D" uid="uid://d4lg0otml5xas" path="res://Assets/environment/galacticWars.png" id="2_d3rg5"]
+[ext_resource type="Texture2D" uid="uid://cerre558uhq37" path="res://Assets/main_menu_bg.png" id="2_euc38"]
 
 [sub_resource type="GDScript" id="GDScript_oqsna"]
 script/source = "extends Node2D
@@ -30,8 +30,8 @@ script = ExtResource("1_s1ueb")
 
 [node name="Sprite2D" type="Sprite2D" parent="Control"]
 z_index = 1
-scale = Vector2(1.6183, 1.80859)
-texture = ExtResource("2_d3rg5")
+scale = Vector2(1.08671, 1.02606)
+texture = ExtResource("2_euc38")
 centered = false
 
 [node name="Control2" type="Control" parent="."]
@@ -43,28 +43,28 @@ offset_bottom = 40.0
 [node name="Button" type="Button" parent="."]
 z_index = 2
 z_as_relative = false
-offset_left = 1306.0
-offset_top = 787.0
-offset_right = 1706.0
-offset_bottom = 987.0
+offset_left = 1286.0
+offset_top = 1170.0
+offset_right = 1686.0
+offset_bottom = 1342.0
 theme_override_font_sizes/font_size = 64
 text = "Play"
 
 [node name="SettingsButton" type="Button" parent="."]
 z_index = 2
-offset_left = 1306.0
-offset_top = 1031.0
-offset_right = 1706.0
-offset_bottom = 1231.0
+offset_left = 1286.0
+offset_top = 1370.0
+offset_right = 1686.0
+offset_bottom = 1542.0
 theme_override_font_sizes/font_size = 64
 text = "Settings"
 
 [node name="ExitButton" type="Button" parent="."]
 z_index = 2
-offset_left = 1304.0
-offset_top = 1293.0
-offset_right = 1704.0
-offset_bottom = 1493.0
+offset_left = 1286.0
+offset_top = 1570.0
+offset_right = 1686.0
+offset_bottom = 1742.0
 theme_override_font_sizes/font_size = 64
 text = "Exit"
 
