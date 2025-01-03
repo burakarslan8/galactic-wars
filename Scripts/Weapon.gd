@@ -1,31 +1,12 @@
 class_name Weapon
 extends Node2D
 
-const ROTATION_RADIUS: float = 150
 const MIN_MOUSE_DISTANCE: float = 1.0
 
-var _attack_speed: float = 5.0
-var _damage: float = 10
-var _range: float = 2000.0
+@export var attack_speed: float = 5.0
+@export var damage: float = 10
+@export var range: float = 2000.0
 var time_since_last_shot: float = 0.0
-
-func get_attack_speed() -> float:
-	return _attack_speed
-
-func set_attack_speed(attack_speed_value: float) -> void:
-	_attack_speed = attack_speed_value
-
-func get_damage() -> float:
-	return _damage
-
-func set_damage(damage_value: float) -> void:
-	_damage = damage_value
-
-func get_range() -> float:
-	return _range
-
-func set_range(range_value: float) -> void:
-	_range = range_value
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -33,17 +14,15 @@ func _process(delta: float) -> void:
 		hide()
 	else:
 		show()
-		update_local_weapon_position()
 		rotate_towards_mouse()
 	handle_shooting(delta)
 
-func update_local_weapon_position() -> void:
+func update_weapon_position():
 	var mouse_position = get_global_mouse_position()
-	var character_center = get_parent().global_position
-	var direction_to_mouse = (mouse_position - character_center).normalized()
-	var offset_x = ROTATION_RADIUS * cos(direction_to_mouse.angle())
-	var offset_y = ROTATION_RADIUS * sin(direction_to_mouse.angle())
-	position = Vector2(offset_x, offset_y)
+	var player_position = get_parent().global_position
+	var direction = (mouse_position - player_position).normalized()
+	position = direction * 150
+	rotation = direction.angle()
 
 func rotate_towards_mouse() -> void:
 	var mouse_position = get_global_mouse_position()
@@ -59,17 +38,17 @@ func should_hide_weapon() -> bool:
 
 func handle_shooting(delta: float) -> void:
 	time_since_last_shot += delta
-	var attack_cooldown = 1.0 / get_attack_speed()
+	var attack_cooldown = 1.0 / attack_speed
 	if Input.is_action_pressed("shoot") and time_since_last_shot >= attack_cooldown:
 		shoot()
 		time_since_last_shot = 0.0
+	
+	update_weapon_position()
 
 func shoot() -> void:
-	spawn_bullet(global_position, Vector2.RIGHT.rotated(global_rotation))
-
-func spawn_bullet(position: Vector2, direction: Vector2):
 	var bullet_scene = preload("res://Scenes/Bullet.tscn")
 	var bullet = bullet_scene.instantiate()
-	get_tree().root.add_child(bullet)
-	bullet.global_position = position
-	bullet.initialize_bullet(direction, self)
+	var game = get_tree().get_root().get_node("Game")
+	game.add_child(bullet)
+	bullet.global_position = global_position
+	bullet.initialize_bullet(Vector2.RIGHT.rotated(rotation), self)

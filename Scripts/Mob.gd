@@ -1,18 +1,40 @@
 extends Area2D
 
-var speed = 500
-var player = null
+@export var health: int = 50
+@export var damage: int = 10
+@export var speed: float = 500
+var player: Node2D = null
 
 func _ready():
-	player = get_parent().get_node("Player")
+	add_to_group("Mobs")
+	self.body_entered.connect(_on_body_entered)
 
 func _process(delta):
+	if not player:
+		player = get_tree().get_root().get_node("Game/Player")
 	if player:
 		var direction = (player.global_position - global_position).normalized()
 		position += direction * speed * delta
 
-func _on_mob_destroyed():
-	var xp_drop = preload("res://Scenes/XP.tscn").instantiate()
+func take_damage(amount: int):
+	health -= amount
+	if health <= 0:
+		die()
+
+func die():
+	call_deferred("_remove_self")
+
+func _remove_self():
+	_spawn_xp_drop()
+	queue_free()
+
+func _on_body_entered(body):
+	if body.name == "Player":
+		body.take_damage(damage)
+		die()
+
+func _spawn_xp_drop():
+	var xp_drop_scene = preload("res://Scenes/XP.tscn")
+	var xp_drop = xp_drop_scene.instantiate()
 	xp_drop.position = global_position
 	get_parent().add_child(xp_drop)
-	queue_free()

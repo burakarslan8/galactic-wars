@@ -4,15 +4,15 @@ var xp = 0
 var level = 1
 
 func _ready():
-	spawn_mob()
+	pass
 
-func spawn_mob():
+func spawn_mob(spawn_position : Vector2):
 	print("Spawning mob")
 	var mob_scene = preload("res://Scenes/Mob.tscn")
 	var mob = mob_scene.instantiate()
 	add_child(mob)
-	var rng = RandomNumberGenerator.new()
-	mob.position = Vector2(rng.randf_range(0, 800), rng.randf_range(0, 600))
+	
+	mob.position = spawn_position
 
 func collect_xp(amount):
 	xp += amount

@@ -1,11 +1,12 @@
-[gd_scene load_steps=4 format=3 uid="uid://soi130tm024a"]
+[gd_scene load_steps=5 format=3 uid="uid://soi130tm024a"]
 
-[ext_resource type="Script" path="res://Scripts/MobSpawner.gd" id="1_jlvg4"]
+[ext_resource type="Script" path="res://Scripts/Game.gd" id="1_vpyda"]
 [ext_resource type="PackedScene" uid="uid://d2j8xaq24vu07" path="res://Scenes/Player.tscn" id="2_pqsoq"]
 [ext_resource type="Texture2D" uid="uid://ctuf2ucyqsf01" path="res://Assets/environment/upscaled_space_stars.png" id="3_2k7tl"]
+[ext_resource type="PackedScene" uid="uid://dxsyj7vy2of7i" path="res://Scenes/MobSpawner.tscn" id="4_upbej"]
 
 [node name="Game" type="Node2D"]
-script = ExtResource("1_jlvg4")
+script = ExtResource("1_vpyda")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
@@ -15,3 +16,5 @@ region_enabled = true
 region_rect = Rect2(0, 0, 10000, 10000)
 
 [node name="Player" parent="." instance=ExtResource("2_pqsoq")]
+
+[node name="MobSpawner" parent="." instance=ExtResource("4_upbej")]

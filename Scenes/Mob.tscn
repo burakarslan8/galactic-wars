@@ -1,16 +1,21 @@
 [gd_scene load_steps=4 format=3 uid="uid://c5mt4aih0xcbe"]
 
 [ext_resource type="Script" path="res://Scripts/Mob.gd" id="1_3upta"]
-[ext_resource type="Texture2D" uid="uid://4de62pht3ueo" path="res://Assets/icon.svg" id="2_b83e3"]
+[ext_resource type="Texture2D" uid="uid://flhjj1guwlm8" path="res://Assets/0.png" id="2_8y5tc"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rdebb"]
-radius = 75.0267
+radius = 143.865
 
-[node name="Mob" type="Area2D"]
+[node name="Mob" type="Area2D" groups=["Mobs"]]
+collision_layer = 2
+collision_mask = 5
 script = ExtResource("1_3upta")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_b83e3")
+position = Vector2(0.500003, 0.999996)
+scale = Vector2(0.4, 0.347)
+texture = ExtResource("2_8y5tc")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(0.8, 0.529)
 shape = SubResource("CircleShape2D_rdebb")

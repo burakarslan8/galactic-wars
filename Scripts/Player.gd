@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-var speed = 500
+var speed = 700
 var health = 100
 var camera: Camera2D = null
 var weapon: Weapon = null
@@ -26,14 +26,18 @@ func _process(delta):
 		velocity.x += 1
 	velocity = velocity.normalized() * speed
 	move_and_slide()
+
 func take_damage(amount):
 	health -= amount
 	if health <= 0:
 		die()
 
 func die():
+	call_deferred("_transition_to_game_over")
+
+func _transition_to_game_over():
+	get_tree().change_scene_to_file("res://Scenes/GameOver.tscn")
 	queue_free()
-	get_tree().change_scene("res://Scenes/GameOver.tscn")
 
 func equip_weapon() -> void:
 	weapon = preload("res://Scenes/Weapon.tscn").instantiate()

@@ -6,9 +6,11 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_u6jrh"]
 
 [node name="Bullet" type="Area2D"]
+collision_mask = 2
 script = ExtResource("1_gcbup")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(2.03115, 1.84)
 shape = SubResource("CircleShape2D_u6jrh")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
