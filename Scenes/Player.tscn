@@ -21,6 +21,7 @@ scale = Vector2(0.63513, 0.440001)
 shape = SubResource("CircleShape2D_8dd8n")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.8, 0.8)
 
 [node name="Weapon" parent="." instance=ExtResource("3_0tgjh")]
 show_behind_parent = true

@@ -18,6 +18,7 @@ func _process(delta: float) -> void:
 "
 
 [node name="Main" type="Node2D"]
+scale = Vector2(0.663198, 0.596325)
 script = SubResource("GDScript_oqsna")
 
 [node name="Control" type="Control" parent="."]
@@ -27,6 +28,7 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("1_s1ueb")
+metadata/_edit_use_anchors_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Control"]
 z_index = 1
@@ -39,6 +41,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+metadata/_edit_use_anchors_ = true
 
 [node name="Button" type="Button" parent="."]
 z_index = 2
@@ -49,6 +52,7 @@ offset_right = 1686.0
 offset_bottom = 1342.0
 theme_override_font_sizes/font_size = 64
 text = "Play"
+metadata/_edit_use_anchors_ = true
 
 [node name="SettingsButton" type="Button" parent="."]
 z_index = 2
@@ -58,6 +62,7 @@ offset_right = 1686.0
 offset_bottom = 1542.0
 theme_override_font_sizes/font_size = 64
 text = "Settings"
+metadata/_edit_use_anchors_ = true
 
 [node name="ExitButton" type="Button" parent="."]
 z_index = 2
@@ -67,6 +72,7 @@ offset_right = 1686.0
 offset_bottom = 1742.0
 theme_override_font_sizes/font_size = 64
 text = "Exit"
+metadata/_edit_use_anchors_ = true
 
 [connection signal="pressed" from="Button" to="Control" method="_on_button_pressed"]
 [connection signal="pressed" from="SettingsButton" to="Control" method="_on_SettingsButton_pressed"]

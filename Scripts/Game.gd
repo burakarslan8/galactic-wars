@@ -41,11 +41,14 @@ func spawn_mob(spawn_position: Vector2) -> Node:
 		mob.connect("died", Callable(self, "_on_mob_killed"))
 	return mob
 
-func _on_mob_killed():
-	add_score(100)
+func _on_mob_killed(killed_by_player: bool):
+	if killed_by_player:
+		add_score(100)
 
 func game_over():
-	get_tree().change_scene("res://Scenes/GameOver.tscn")
+	var game_over_panel = $GUI/GameOver
+	game_over_panel.show_game_over(score)
+
 
 func get_elapsed_time() -> float:
 	return elapsed_time

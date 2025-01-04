@@ -1,3 +1,73 @@
-[gd_scene format=3 uid="uid://cnt2ck3xv7h0g"]
+[gd_scene load_steps=4 format=3 uid="uid://cnt2ck3xv7h0g"]
 
-[node name="GameOver" type="Node2D"]
+[ext_resource type="FontFile" uid="uid://balbcmuoccarq" path="res://Fonts/SpeedyRegular-7BLoE.ttf" id="1_7v02p"]
+[ext_resource type="Script" path="res://Scripts/GameOver.gd" id="1_obmtw"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sqsn1"]
+bg_color = Color(0, 0, 0, 0.501961)
+
+[node name="GameOver" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_obmtw")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+offset_left = -960.0
+offset_top = -89.0
+offset_right = 960.0
+offset_bottom = 89.0
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_sqsn1")
+
+[node name="GameOverLabel" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 2.0
+offset_right = 1919.0
+offset_bottom = 117.0
+theme_override_fonts/font = ExtResource("1_7v02p")
+theme_override_font_sizes/font_size = 100
+text = "GAME OVER"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScoreLabel" type="Label" parent="Panel"]
+layout_mode = 0
+offset_top = 102.0
+offset_right = 1899.0
+offset_bottom = 163.0
+theme_override_fonts/font = ExtResource("1_7v02p")
+theme_override_font_sizes/font_size = 50
+text = "SCORE:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RestartButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = -370.0
+offset_top = 197.0
+offset_right = -95.0
+offset_bottom = 308.0
+mouse_filter = 1
+theme_override_fonts/font = ExtResource("1_7v02p")
+theme_override_font_sizes/font_size = 50
+text = "RESTART"
+
+[node name="QuitButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 145.0
+offset_top = 197.0
+offset_right = 374.0
+offset_bottom = 308.0
+mouse_filter = 1
+theme_override_fonts/font = ExtResource("1_7v02p")
+theme_override_font_sizes/font_size = 50
+text = "QUIT"

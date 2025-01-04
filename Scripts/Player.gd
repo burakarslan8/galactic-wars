@@ -6,6 +6,7 @@ var xp = 0
 var level = 1
 var camera: Camera2D = null
 var weapon: Weapon = null
+
 @onready var health_bar = get_parent().get_node("GUI/HealthBar")
 @onready var xp_bar = get_parent().get_node("GUI/XPBar")
 @onready var level_label = get_parent().get_node("GUI/LevelLabel")
@@ -44,10 +45,8 @@ func take_damage(amount):
 		die()
 
 func die():
-	call_deferred("_transition_to_game_over")
-
-func _transition_to_game_over():
-	get_tree().change_scene_to_file("res://Scenes/GameOver.tscn")
+	var game = get_parent()
+	game.game_over()
 
 func rotate_towards_mouse() -> void:
 	var mouse_position = get_global_mouse_position()

@@ -6,13 +6,14 @@ extends Area2D
 var player: Node2D = null
 @onready var health_bar = $HealthBar
 
-signal died
+signal died(killed_by_player: bool)
 
 var killed_by_player: bool = false
 
 func _ready():
 	add_to_group("Mobs")
 	self.body_entered.connect(_on_body_entered)
+	
 	
 	if health_bar:
 		health_bar.max_value = health
@@ -42,12 +43,13 @@ func take_damage(amount: int):
 		die()
 
 func die():
-	emit_signal("died")
+	emit_signal("died", killed_by_player)
 	call_deferred("_remove_self")
 
 func _remove_self():
 	if killed_by_player:
 		_spawn_xp_drop()
+
 	queue_free()
 
 func _on_body_entered(body):

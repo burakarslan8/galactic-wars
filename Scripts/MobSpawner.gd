@@ -35,9 +35,12 @@ func _spawn_mob():
 
 func _spawn_mob_circular():
 	var game = get_parent()
-	var player_position = get_parent().get_node("Player").global_position
+	var player = get_parent().get_node("Player")
+	var player_position = Vector2(0,0)
+	if player:
+		player_position = player.global_position
 
-	var mob_count = 6
+	var mob_count = 4
 	for i in range(mob_count):
 		var angle = i * (TAU / mob_count)
 		var position = player_position + Vector2(cos(angle), sin(angle)) * outer_radius

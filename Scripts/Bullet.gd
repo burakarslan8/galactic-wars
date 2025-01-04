@@ -23,6 +23,6 @@ func initialize_bullet(direction_value: Vector2, weapon_instance: Weapon) -> voi
 	weapon = weapon_instance
 
 func _on_body_entered(body):
-	if body.is_in_group("Mobs"):
+	if body.is_in_group("Mobs") or body.is_in_group("Meteors"):
 		body.take_damage(weapon.damage)
 		queue_free()
