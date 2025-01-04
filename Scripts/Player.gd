@@ -7,6 +7,8 @@ var level = 1
 var camera: Camera2D = null
 var weapon: Weapon = null
 @onready var health_bar = get_parent().get_node("GUI/HealthBar")
+@onready var xp_bar = get_parent().get_node("GUI/XPBar")
+@onready var level_label = get_parent().get_node("GUI/LevelLabel")
 
 func _ready() -> void:
 	camera = $Camera2D
@@ -14,6 +16,9 @@ func _ready() -> void:
 		print("Camera attached to character")
 	health_bar.max_value = health
 	health_bar.value = health
+	xp_bar.max_value = 10
+	xp_bar.value = xp % 10
+	level_label.text = "LEVEL: " + str(level)
 
 func spawn_character(spawn_position: Vector2):
 	position = spawn_position
@@ -51,8 +56,10 @@ func rotate_towards_mouse() -> void:
 
 func collect_xp(amount):
 	xp += amount
+	xp_bar.value = xp % 10
 	if xp >= level * 10:
 		level_up()
 
 func level_up():
 	level += 1
+	level_label.text = "LEVEL: " + str(level)

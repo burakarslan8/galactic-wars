@@ -1,23 +1,54 @@
-[gd_scene load_steps=5 format=3 uid="uid://emom64bknfop"]
+[gd_scene load_steps=7 format=3 uid="uid://emom64bknfop"]
 
 [ext_resource type="Script" path="res://Scripts/GUI.gd" id="1_0meuj"]
 [ext_resource type="FontFile" uid="uid://balbcmuoccarq" path="res://Fonts/SpeedyRegular-7BLoE.ttf" id="2_vdnmy"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vy7tl"]
-bg_color = Color(0.815791, 0.0864511, 0.142522, 1)
+bg_color = Color(0.6, 0.6, 0.6, 0)
 border_width_left = 4
 border_width_top = 4
 border_width_right = 4
 border_width_bottom = 4
 border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_squug"]
 bg_color = Color(0.0705882, 0.74902, 0, 1)
 border_width_left = 4
 border_width_top = 4
-border_width_right = 4
+border_width_right = 1
 border_width_bottom = 4
 border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hi2lb"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8g5iv"]
+bg_color = Color(0.988235, 0.945098, 0.168627, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 3
 
 [node name="GUI" type="CanvasLayer"]
 script = ExtResource("1_0meuj")
@@ -48,6 +79,7 @@ offset_bottom = -71.0
 grow_horizontal = 2
 grow_vertical = 0
 scale = Vector2(1.52, 1.96)
+theme_override_fonts/font = ExtResource("2_vdnmy")
 theme_override_font_sizes/font_size = 24
 theme_override_styles/background = SubResource("StyleBoxFlat_vy7tl")
 theme_override_styles/fill = SubResource("StyleBoxFlat_squug")
@@ -60,3 +92,32 @@ offset_right = 60.0
 offset_bottom = 43.0
 theme_override_fonts/font = ExtResource("2_vdnmy")
 theme_override_font_sizes/font_size = 32
+
+[node name="LevelLabel" type="Label" parent="."]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 30.0
+offset_top = -139.0
+offset_right = 207.0
+offset_bottom = -87.0
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("2_vdnmy")
+theme_override_font_sizes/font_size = 32
+
+[node name="XPBar" type="ProgressBar" parent="."]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 30.0
+offset_top = -75.0
+offset_right = 263.0
+offset_bottom = -33.0
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("2_vdnmy")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/background = SubResource("StyleBoxFlat_hi2lb")
+theme_override_styles/fill = SubResource("StyleBoxFlat_8g5iv")
+max_value = 10.0
+value = 10.0
+show_percentage = false

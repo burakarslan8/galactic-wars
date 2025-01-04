@@ -41,7 +41,7 @@ position = Vector2(6, 106)
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_hxefk")
 animation = &"fall"
-frame_progress = 0.406492
+frame_progress = 0.412494
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-76, -32)

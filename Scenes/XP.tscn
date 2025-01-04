@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://grkmluju5s54"]
 
 [ext_resource type="Script" path="res://Scripts/XP.gd" id="1_1e5n6"]
-[ext_resource type="Texture2D" uid="uid://dxx4c1k1bfao1" path="res://Assets/dot_large.png" id="2_ro3nk"]
+[ext_resource type="Texture2D" uid="uid://kc0lyi2wstad" path="res://Assets/xp.png" id="2_gt221"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0m5j4"]
 
@@ -11,9 +11,9 @@ collision_mask = 4
 script = ExtResource("1_1e5n6")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(5, 5)
-texture = ExtResource("2_ro3nk")
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("2_gt221")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-scale = Vector2(5, 5)
+scale = Vector2(3, 3)
 shape = SubResource("CircleShape2D_0m5j4")
