@@ -43,7 +43,6 @@ func die():
 
 func _transition_to_game_over():
 	get_tree().change_scene_to_file("res://Scenes/GameOver.tscn")
-	queue_free()
 
 func rotate_towards_mouse() -> void:
 	var mouse_position = get_global_mouse_position()

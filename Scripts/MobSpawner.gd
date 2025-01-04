@@ -3,7 +3,7 @@ extends Node2D
 @export var inner_radius: float = 1500
 @export var outer_radius: float = 1800
 @export var spawn_interval: float = 5.0
-var stage: int = 0
+var stage: int = 1
 
 func _ready():
 	var stage_manager = get_parent().get_node("StageManager")
@@ -12,7 +12,7 @@ func _ready():
 	var timer = Timer.new()
 	timer.name = "SpawnTimer"
 	timer.wait_time = spawn_interval
-	timer.autostart = true
+	timer.autostart = false
 	timer.connect("timeout", Callable(self, "_spawn_mob"))
 	add_child(timer)
 	
@@ -24,10 +24,10 @@ func _on_stage_changed(new_stage: int, new_spawn_interval: float):
 	if timer:
 		timer.wait_time = spawn_interval
 		timer.start()
+		_spawn_mob()
+		
 	else:
 		print("Error: SpawnTimer not found!")
-
-	_spawn_mob()
 	
 func _spawn_mob():
 	print("Spawning mobs for Stage:", stage)
@@ -43,7 +43,7 @@ func _spawn_mob_circular():
 		var position = player_position + Vector2(cos(angle), sin(angle)) * outer_radius
 		var mob = game.spawn_mob(position)
 		
-		if mob and mob.has_method("set_stats"):
-			mob.set_stats((stage - 1) * 5, (stage - 1) * 5, (stage - 1) * 25)
+		if mob:
+			mob.increase_stats((stage - 1) * 5, (stage - 1) * 5, (stage - 1) * 25)
 		else:
 			print("Error: Spawned mob is invalid or missing properties")

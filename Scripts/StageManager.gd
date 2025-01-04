@@ -6,22 +6,23 @@ extends Node
 @export var spawn_interval_decrement: float = 0.5
 
 @onready var stage_label = get_parent().get_node("GUI/StageLabel")
+@onready var game = get_parent()
 
 signal stage_changed(new_stage: int, spawn_interval: float)
 
 var current_stage: int = 0
-var elapsed_time: float = 0.0
 var spawn_interval: float = initial_spawn_interval
+var last_stage_time: float = 0.0
 
 func _ready():
 	await get_tree().create_timer(initial_stage_duration).timeout
 	increment_stage()
 
 func _process(delta: float) -> void:
-	elapsed_time += delta
-	if elapsed_time >= stage_duration:
-		elapsed_time = 0.0
+	var elapsed_time = game.get_elapsed_time()
+	if elapsed_time - last_stage_time >= stage_duration:
 		increment_stage()
+		last_stage_time = elapsed_time
 
 func increment_stage():
 	current_stage += 1
@@ -32,8 +33,12 @@ func increment_stage():
 	if stage_label:
 		stage_label.text = "STAGE " + str(current_stage)
 		stage_label.show()
-		await get_tree().create_timer(2.0).timeout
-		stage_label.hide()
+		
+		call_deferred("_on_stage_start")
+
+func _on_stage_start():
+	await get_tree().create_timer(2.0).timeout
+	stage_label.hide()
 
 	emit_signal("stage_changed", current_stage, spawn_interval)
 	print("Stage progressed to:", current_stage)

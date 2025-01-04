@@ -52,3 +52,11 @@ theme_override_font_sizes/font_size = 24
 theme_override_styles/background = SubResource("StyleBoxFlat_vy7tl")
 theme_override_styles/fill = SubResource("StyleBoxFlat_squug")
 value = 50.0
+
+[node name="ScoreLabel" type="Label" parent="."]
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 60.0
+offset_bottom = 43.0
+theme_override_fonts/font = ExtResource("2_vdnmy")
+theme_override_font_sizes/font_size = 32
