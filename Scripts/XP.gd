@@ -5,5 +5,5 @@ func _ready() -> void:
 	
 func _on_body_entered(body):
 	if body.name == "Player":
-		body.get_parent().call("collect_xp", 1)
+		body.call("collect_xp", 1)
 		queue_free()

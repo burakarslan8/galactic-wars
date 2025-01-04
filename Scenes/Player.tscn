@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://d2j8xaq24vu07"]
+[gd_scene load_steps=7 format=3 uid="uid://d2j8xaq24vu07"]
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_4fv6r"]
 [ext_resource type="Texture2D" uid="uid://c3ocvp1x4g4gt" path="res://Assets/upscaled_main_ship.png" id="2_c4uo0"]
+[ext_resource type="FontFile" uid="uid://balbcmuoccarq" path="res://Fonts/SpeedyRegular-7BLoE.ttf" id="3_t63bs"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8dd8n"]
 radius = 152.591
@@ -34,7 +35,7 @@ texture = ExtResource("2_c4uo0")
 position = Vector2(-2, 27)
 shape = SubResource("CircleShape2D_8dd8n")
 
-[node name="ProgressBar" type="ProgressBar" parent="."]
+[node name="HealthBar" type="ProgressBar" parent="."]
 offset_left = -137.0
 offset_top = 118.0
 offset_right = 135.0
@@ -44,3 +45,16 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_vmve7")
 value = 50.0
 
 [node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="StageLabel" type="Label" parent="Camera2D"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -246.0
+offset_top = -534.0
+offset_right = 288.0
+offset_bottom = -397.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("3_t63bs")
+theme_override_font_sizes/font_size = 100
+horizontal_alignment = 1

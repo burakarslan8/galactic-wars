@@ -2,9 +2,11 @@ extends CharacterBody2D
 
 var speed = 700
 var health = 100
+var xp = 0
+var level = 1
 var camera: Camera2D = null
 var weapon: Weapon = null
-@onready var health_bar = $ProgressBar
+@onready var health_bar = $HealthBar
 
 func _ready() -> void:
 	camera = $Camera2D
@@ -47,3 +49,11 @@ func equip_weapon() -> void:
 	weapon = preload("res://Scenes/Weapon.tscn").instantiate()
 	add_child(weapon)
 	weapon.position = Vector2(0, -40)
+
+func collect_xp(amount):
+	xp += amount
+	if xp >= level * 10:
+		level_up()
+
+func level_up():
+	level += 1
