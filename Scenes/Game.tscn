@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://soi130tm024a"]
+[gd_scene load_steps=8 format=3 uid="uid://soi130tm024a"]
 
 [ext_resource type="Script" path="res://Scripts/Game.gd" id="1_vpyda"]
 [ext_resource type="PackedScene" uid="uid://d2j8xaq24vu07" path="res://Scenes/Player.tscn" id="2_pqsoq"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dxsyj7vy2of7i" path="res://Scenes/MobSpawner.tscn" id="4_upbej"]
 [ext_resource type="PackedScene" uid="uid://ctp7lofbnx7jo" path="res://Scenes/StageManager.tscn" id="5_bxmla"]
 [ext_resource type="PackedScene" uid="uid://emom64bknfop" path="res://Scenes/GUI.tscn" id="6_et4ge"]
+[ext_resource type="PackedScene" uid="uid://cru12l8q7labf" path="res://Scenes/MeteorSpawner.tscn" id="7_w51o3"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_vpyda")
@@ -24,3 +25,5 @@ region_rect = Rect2(0, 0, 10000, 10000)
 [node name="MobSpawner" parent="." instance=ExtResource("4_upbej")]
 
 [node name="GUI" parent="." instance=ExtResource("6_et4ge")]
+
+[node name="MeteorSpawner" parent="." instance=ExtResource("7_w51o3")]

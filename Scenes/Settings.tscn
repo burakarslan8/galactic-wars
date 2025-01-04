@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://dyfbrfqiy7sgy"]
 
 [ext_resource type="Script" path="res://Scripts/Settings.gd" id="1_g2fnj"]
-[ext_resource type="Texture2D" uid="uid://d4lg0otml5xas" path="res://Assets/environment/galacticWars.png" id="2_0lq5x"]
+[ext_resource type="Texture2D" uid="uid://cerre558uhq37" path="res://Assets/main_menu_bg.png" id="2_sg5qb"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -16,8 +16,9 @@ script = ExtResource("1_g2fnj")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 z_index = 1
-scale = Vector2(4, 4)
-texture = ExtResource("2_0lq5x")
+scale = Vector2(1.08671, 1.02606)
+texture = ExtResource("2_sg5qb")
+centered = false
 
 [node name="Label" type="Label" parent="."]
 z_index = 3

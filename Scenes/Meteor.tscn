@@ -1,0 +1,50 @@
+[gd_scene load_steps=7 format=3 uid="uid://o1ivrkksdivh"]
+
+[ext_resource type="Script" path="res://Scripts/Meteor.gd" id="1_yjjj4"]
+[ext_resource type="Texture2D" uid="uid://dsm32dy6aidhv" path="res://Assets/meteor_1.png" id="2_t51tl"]
+[ext_resource type="Texture2D" uid="uid://cngl2q2ybg5g" path="res://Assets/meteor_2.png" id="3_h738n"]
+[ext_resource type="Texture2D" uid="uid://dojgbgrol70gf" path="res://Assets/meteor_3.png" id="4_qldor"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hxefk"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_t51tl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_h738n")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_qldor")
+}],
+"loop": true,
+"name": &"fall",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jqtiy"]
+radius = 24.0
+height = 253.039
+
+[node name="Meteor" type="Area2D"]
+collision_layer = 8
+collision_mask = 5
+script = ExtResource("1_yjjj4")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(6, 106)
+scale = Vector2(0.5, 0.5)
+sprite_frames = SubResource("SpriteFrames_hxefk")
+animation = &"fall"
+frame_progress = 0.406492
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-76, -32)
+rotation = -1.23738
+scale = Vector2(1.87081, 1)
+shape = SubResource("CapsuleShape2D_jqtiy")
