@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://c5mt4aih0xcbe"]
 
 [ext_resource type="Script" path="res://Scripts/Mob.gd" id="1_3upta"]
-[ext_resource type="Texture2D" uid="uid://d3d5ffchpc8qs" path="res://Assets/0 2.png" id="2_03aa0"]
+[ext_resource type="Texture2D" uid="uid://qcu24ge1a1rb" path="res://Assets/mob_1.png" id="2_ddnm3"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rdebb"]
 radius = 151.356
@@ -30,7 +30,7 @@ script = ExtResource("1_3upta")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0.500003, 0.999996)
 scale = Vector2(0.08, 0.07)
-texture = ExtResource("2_03aa0")
+texture = ExtResource("2_ddnm3")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2(0.6, 0.397)

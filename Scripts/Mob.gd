@@ -1,7 +1,7 @@
 extends Area2D
 
 @export var health: int = 10
-@export var damage: int = 10
+@export var damage: int = 5
 @export var speed: float = 350
 var player: Node2D = null
 @onready var health_bar = $HealthBar
@@ -10,13 +10,19 @@ var player: Node2D = null
 func _ready():
 	add_to_group("Mobs")
 	self.body_entered.connect(_on_body_entered)
-	health_bar.max_value = health
-	health_bar.value = health
+	
+	if health_bar:
+		health_bar.max_value = health
+		health_bar.value = health
 
 func set_stats(health_increase: int, damage_increase: int, speed_increase: float):
 	health += health_increase
 	damage += damage_increase
 	speed += speed_increase
+	
+	if health_bar:
+		health_bar.max_value = health
+		health_bar.value = health
 
 func _process(delta):
 	if not player:

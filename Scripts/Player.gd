@@ -6,7 +6,7 @@ var xp = 0
 var level = 1
 var camera: Camera2D = null
 var weapon: Weapon = null
-@onready var health_bar = $HealthBar
+@onready var health_bar = get_parent().get_node("GUI/HealthBar")
 
 func _ready() -> void:
 	camera = $Camera2D
@@ -14,7 +14,6 @@ func _ready() -> void:
 		print("Camera attached to character")
 	health_bar.max_value = health
 	health_bar.value = health
-	equip_weapon()
 
 func spawn_character(spawn_position: Vector2):
 	position = spawn_position
@@ -31,6 +30,7 @@ func _process(delta):
 		velocity.x += 1
 	velocity = velocity.normalized() * speed
 	move_and_slide()
+	rotate_towards_mouse()
 
 func take_damage(amount):
 	health -= amount
@@ -45,10 +45,10 @@ func _transition_to_game_over():
 	get_tree().change_scene_to_file("res://Scenes/GameOver.tscn")
 	queue_free()
 
-func equip_weapon() -> void:
-	weapon = preload("res://Scenes/Weapon.tscn").instantiate()
-	add_child(weapon)
-	weapon.position = Vector2(0, -40)
+func rotate_towards_mouse() -> void:
+	var mouse_position = get_global_mouse_position()
+	var direction_to_mouse = (mouse_position - global_position).normalized()
+	rotation = direction_to_mouse.angle()
 
 func collect_xp(amount):
 	xp += amount

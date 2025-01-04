@@ -1,11 +1,11 @@
 extends Node
 
-@export var initial_stage_duration: float = 5.0  # Duration of the first stage in seconds
-@export var stage_duration: float = 20.0         # Duration of subsequent stages
-@export var initial_spawn_interval: float = 5.0  # Starting spawn interval
-@export var spawn_interval_decrement: float = 0.5  # Decrease in spawn interval every 5 stages
+@export var initial_stage_duration: float = 5.0
+@export var stage_duration: float = 20.0
+@export var initial_spawn_interval: float = 5.0
+@export var spawn_interval_decrement: float = 0.5
 
-@onready var stage_label = get_parent().get_node("Player/Camera2D/StageLabel")
+@onready var stage_label = get_parent().get_node("GUI/StageLabel")
 
 signal stage_changed(new_stage: int, spawn_interval: float)
 

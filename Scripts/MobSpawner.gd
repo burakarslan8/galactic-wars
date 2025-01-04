@@ -2,7 +2,7 @@ extends Node2D
 
 @export var inner_radius: float = 1500
 @export var outer_radius: float = 1800
-@export var spawn_interval: float = 10.0
+@export var spawn_interval: float = 5.0
 var stage: int = 0
 
 func _ready():
@@ -44,6 +44,6 @@ func _spawn_mob_circular():
 		var mob = game.spawn_mob(position)
 		
 		if mob and mob.has_method("set_stats"):
-			mob.set_stats((stage - 1) * 10, (stage - 1) * 5, (stage - 1) * 25)
+			mob.set_stats((stage - 1) * 5, (stage - 1) * 5, (stage - 1) * 25)
 		else:
 			print("Error: Spawned mob is invalid or missing properties")

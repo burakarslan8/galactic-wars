@@ -9,6 +9,7 @@ var weapon: Weapon = null
 func _ready() -> void:
 	add_to_group("Bullets")
 	self.area_entered.connect(_on_body_entered)
+
 func _process(delta: float) -> void:
 	var movement = direction * speed * delta
 	position += movement

@@ -1,0 +1,54 @@
+[gd_scene load_steps=5 format=3 uid="uid://emom64bknfop"]
+
+[ext_resource type="Script" path="res://Scripts/GUI.gd" id="1_0meuj"]
+[ext_resource type="FontFile" uid="uid://balbcmuoccarq" path="res://Fonts/SpeedyRegular-7BLoE.ttf" id="2_vdnmy"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vy7tl"]
+bg_color = Color(0.815791, 0.0864511, 0.142522, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_squug"]
+bg_color = Color(0.0705882, 0.74902, 0, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0, 0, 0, 1)
+
+[node name="GUI" type="CanvasLayer"]
+script = ExtResource("1_0meuj")
+
+[node name="StageLabel" type="Label" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -267.0
+offset_top = 50.0
+offset_right = 267.0
+offset_bottom = 187.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("2_vdnmy")
+theme_override_font_sizes/font_size = 100
+horizontal_alignment = 1
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -303.0
+offset_top = -113.0
+offset_right = 100.0
+offset_bottom = -71.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(1.52, 1.96)
+theme_override_font_sizes/font_size = 24
+theme_override_styles/background = SubResource("StyleBoxFlat_vy7tl")
+theme_override_styles/fill = SubResource("StyleBoxFlat_squug")
+value = 50.0
