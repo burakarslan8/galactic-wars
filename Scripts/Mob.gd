@@ -5,6 +5,7 @@ extends Area2D
 @export var speed: float = 350
 var player: Node2D = null
 @onready var health_bar = $HealthBar
+@onready var move_animation = $AnimatedSprite2D
 var death_animation = preload("res://Scenes/Explosion.tscn")
 signal died(killed_by_player: bool)
 
@@ -13,7 +14,6 @@ var killed_by_player: bool = false
 func _ready():
 	add_to_group("Mobs")
 	self.body_entered.connect(_on_body_entered)
-	
 	
 	if health_bar:
 		health_bar.max_value = health
@@ -34,6 +34,7 @@ func _process(delta):
 	if player:
 		var direction = (player.global_position - global_position).normalized()
 		position += direction * speed * delta
+		move_animation.play()
 
 func take_damage(amount: int):
 	health -= amount

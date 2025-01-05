@@ -1,7 +1,22 @@
-[gd_scene load_steps=6 format=3 uid="uid://c5mt4aih0xcbe"]
+[gd_scene load_steps=8 format=3 uid="uid://c5mt4aih0xcbe"]
 
 [ext_resource type="Script" path="res://Scripts/Mob.gd" id="1_3upta"]
 [ext_resource type="Texture2D" uid="uid://qcu24ge1a1rb" path="res://Assets/mob_1.png" id="2_ddnm3"]
+[ext_resource type="Texture2D" uid="uid://dt22xfu0g0gtk" path="res://Assets/mob_2.png" id="3_jy8oo"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xultx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_ddnm3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_jy8oo")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rdebb"]
 radius = 151.356
@@ -28,9 +43,10 @@ collision_layer = 2
 collision_mask = 5
 script = ExtResource("1_3upta")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.08, 0.07)
-texture = ExtResource("2_ddnm3")
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.08, 0.08)
+sprite_frames = SubResource("SpriteFrames_xultx")
+frame_progress = 0.150182
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2(0.6, 0.397)

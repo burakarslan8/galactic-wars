@@ -1,65 +1,79 @@
-[gd_scene load_steps=3 format=3 uid="uid://dyfbrfqiy7sgy"]
+[gd_scene load_steps=5 format=3 uid="uid://dyfbrfqiy7sgy"]
 
 [ext_resource type="Script" path="res://Scripts/Settings.gd" id="1_g2fnj"]
-[ext_resource type="Texture2D" uid="uid://cerre558uhq37" path="res://Assets/main_menu_bg.png" id="2_sg5qb"]
+[ext_resource type="Texture2D" uid="uid://dd7n351tnxuth" path="res://Assets/settings_bg.png" id="2_k44o1"]
+[ext_resource type="FontFile" uid="uid://balbcmuoccarq" path="res://Fonts/SpeedyRegular-7BLoE.ttf" id="3_q50n7"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c58by"]
+bg_color = Color(0.328048, 0.594571, 1, 1)
 
 [node name="Control" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 2.0
+offset_top = 2.0
+offset_right = 2.0
+offset_bottom = 2.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_g2fnj")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 z_index = 1
-scale = Vector2(0.720721, 0.611898)
-texture = ExtResource("2_sg5qb")
+position = Vector2(0, 2)
+scale = Vector2(0.721324, 0.61067)
+texture = ExtResource("2_k44o1")
 centered = false
 
 [node name="Label" type="Label" parent="."]
 z_index = 3
 layout_mode = 0
-offset_left = 841.0
-offset_top = 173.0
-offset_right = 1141.0
-offset_bottom = 473.0
+offset_left = 795.0
+offset_top = 130.0
+offset_right = 1249.0
+offset_bottom = 258.0
 theme_type_variation = &"HeaderLarge"
-text = "Settings"
+theme_override_fonts/font = ExtResource("3_q50n7")
+theme_override_font_sizes/font_size = 80
+text = "SETTINGS"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="."]
+z_index = 3
+layout_mode = 0
+offset_left = 796.0
+offset_top = 392.0
+offset_right = 1167.0
+offset_bottom = 432.0
+theme_type_variation = &"HeaderLarge"
+theme_override_fonts/font = ExtResource("3_q50n7")
+theme_override_font_sizes/font_size = 30
+text = "Background Music"
 horizontal_alignment = 1
 
 [node name="HSlider" type="HSlider" parent="."]
 z_index = 3
 layout_mode = 0
 offset_left = 821.0
-offset_top = 223.0
-offset_right = 1221.0
-offset_bottom = 423.0
+offset_top = 421.0
+offset_right = 1151.0
+offset_bottom = 515.0
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_c58by")
 min_value = -80.0
 max_value = 0.0
-
-[node name="OptionButton" type="OptionButton" parent="."]
-z_index = 3
-layout_mode = 0
-offset_left = 821.0
-offset_top = 523.0
-offset_right = 1221.0
-offset_bottom = 723.0
-item_count = 2
-popup/item_0/text = "Türkçe"
-popup/item_1/text = "English"
-popup/item_1/id = 1
 
 [node name="BackButton" type="Button" parent="."]
 z_index = 2
 layout_mode = 0
-offset_left = 821.0
-offset_top = 823.0
-offset_right = 1221.0
-offset_bottom = 1023.0
-text = "Back"
+offset_left = 859.0
+offset_top = 614.0
+offset_right = 1122.0
+offset_bottom = 700.0
+theme_override_fonts/font = ExtResource("3_q50n7")
+theme_override_font_sizes/font_size = 50
+text = "BACK"
 
 [connection signal="value_changed" from="HSlider" to="." method="_on_HSlider_value_changed"]
-[connection signal="item_selected" from="OptionButton" to="." method="_on_OptionButton_item_selected"]
 [connection signal="pressed" from="BackButton" to="." method="_on_BackButton_pressed"]

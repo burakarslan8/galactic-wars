@@ -86,7 +86,7 @@ func spawn_ship(level):
 			current_ship = self
 		
 		for child in current_ship.get_children():
-			if child.name == "Sprite2D" or child is CollisionShape2D or child.name.begins_with("Weapon"):
+			if (child is Sprite2D and child.name != "ShieldVisual") or child is CollisionShape2D or child.name.begins_with("Weapon"):
 				child.call_deferred("queue_free")
 		
 		for bullet in get_tree().get_nodes_in_group("Bullets"):
