@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://soi130tm024a"]
+[gd_scene load_steps=10 format=3 uid="uid://soi130tm024a"]
 
 [ext_resource type="Script" path="res://Scripts/Game.gd" id="1_vpyda"]
 [ext_resource type="PackedScene" uid="uid://d2j8xaq24vu07" path="res://Scenes/Player.tscn" id="2_pqsoq"]
@@ -9,6 +9,8 @@
 [ext_resource type="PackedScene" uid="uid://cru12l8q7labf" path="res://Scenes/MeteorSpawner.tscn" id="7_w51o3"]
 [ext_resource type="PackedScene" uid="uid://cnt2ck3xv7h0g" path="res://Scenes/GameOver.tscn" id="8_tc0lp"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vypnv"]
+
 [node name="Game" type="Node2D"]
 script = ExtResource("1_vpyda")
 
@@ -17,7 +19,7 @@ texture_filter = 1
 texture_repeat = 2
 texture = ExtResource("3_2k7tl")
 region_enabled = true
-region_rect = Rect2(0, 0, 10000, 10000)
+region_rect = Rect2(0, 0, 15000, 15000)
 
 [node name="Player" parent="." instance=ExtResource("2_pqsoq")]
 
@@ -31,3 +33,17 @@ region_rect = Rect2(0, 0, 10000, 10000)
 visible = false
 
 [node name="MeteorSpawner" parent="." instance=ExtResource("7_w51o3")]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+scale = Vector2(500, 499.988)
+collision_layer = 16
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("RectangleShape2D_vypnv")
+
+[node name="Line2D" type="Line2D" parent="."]
+points = PackedVector2Array(-5000, -4999, -5000, 5000, 5000, 5000, 5000, -5000)
+closed = true
+width = 20.0
+default_color = Color(0.767361, 0, 0.223266, 1)
