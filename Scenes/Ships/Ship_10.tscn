@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://cqo20oskhgx4l"]
+
+[ext_resource type="Script" path="res://Scripts/Ships/Ship_10.gd" id="1_67tlk"]
+[ext_resource type="Texture2D" uid="uid://cur3ul1oihgnr" path="res://Assets/ship_3.png" id="1_jje40"]
+[ext_resource type="PackedScene" uid="uid://cuxlk71gkqbdi" path="res://Scenes/Weapons/Weapon_10.tscn" id="2_ydkmk"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_d1ncq"]
+radius = 152.591
+
+[node name="Ship_10" type="CharacterBody2D"]
+script = ExtResource("1_67tlk")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_jje40")
+
+[node name="Weapon_10" parent="." instance=ExtResource("2_ydkmk")]
+show_behind_parent = true
+position = Vector2(68, 0)
+scale = Vector2(1, 2.16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, 6)
+scale = Vector2(0.595128, 0.480001)
+shape = SubResource("CircleShape2D_d1ncq")

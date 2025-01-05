@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=3 uid="uid://bk5fvr8lrw24d"]
+
+[ext_resource type="Texture2D" uid="uid://b8v6htfosm4sd" path="res://Assets/ship_2.png" id="1_5v6jt"]
+[ext_resource type="Script" path="res://Scripts/Ships/Ship_5.gd" id="1_jt1fm"]
+[ext_resource type="PackedScene" uid="uid://ddih1gjhbb060" path="res://Scenes/Weapons/Weapon_1.tscn" id="2_17pjv"]
+[ext_resource type="PackedScene" uid="uid://djddcjmjojcp6" path="res://Scenes/Bullets/Bullet_5.tscn" id="4_xub1d"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2j7v6"]
+radius = 152.591
+
+[node name="Ship_5" type="CharacterBody2D"]
+script = ExtResource("1_jt1fm")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_5v6jt")
+
+[node name="Weapon_1_1" parent="." instance=ExtResource("2_17pjv")]
+show_behind_parent = true
+position = Vector2(69, -32)
+bullet_scene = ExtResource("4_xub1d")
+attack_speed = 8.0
+
+[node name="Weapon_1_2" parent="." instance=ExtResource("2_17pjv")]
+show_behind_parent = true
+position = Vector2(69, 40)
+bullet_scene = ExtResource("4_xub1d")
+attack_speed = 8.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(5.96046e-08, 1)
+scale = Vector2(0.63513, 0.440001)
+shape = SubResource("CircleShape2D_2j7v6")

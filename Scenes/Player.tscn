@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_4fv6r"]
 [ext_resource type="Texture2D" uid="uid://btkkem785v23s" path="res://Assets/ship_1.png" id="2_27xv3"]
-[ext_resource type="PackedScene" uid="uid://ddih1gjhbb060" path="res://Scenes/Weapon.tscn" id="3_0tgjh"]
+[ext_resource type="PackedScene" uid="uid://ddih1gjhbb060" path="res://Scenes/Weapons/Weapon_1.tscn" id="3_0tgjh"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8dd8n"]
 radius = 152.591

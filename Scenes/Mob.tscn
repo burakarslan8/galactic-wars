@@ -23,6 +23,7 @@ border_width_bottom = 4
 border_color = Color(0, 0, 0, 1)
 
 [node name="Mob" type="Area2D" groups=["Mobs"]]
+visibility_layer = 2
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("1_3upta")

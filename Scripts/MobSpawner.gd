@@ -40,13 +40,14 @@ func _spawn_mob_circular():
 	if player:
 		player_position = player.global_position
 
-	var mob_count = 4
+	var mob_count = 4 + ((stage - 1) / 5) * 2
+
 	for i in range(mob_count):
 		var angle = i * (TAU / mob_count)
 		var position = player_position + Vector2(cos(angle), sin(angle)) * outer_radius
 		var mob = game.spawn_mob(position)
 		
 		if mob:
-			mob.increase_stats((stage - 1) * 5, (stage - 1) * 5, (stage - 1) * 25)
+			mob.increase_stats((stage - 1) * 8, (stage - 1) * 2, (stage - 1) * 20)
 		else:
 			print("Error: Spawned mob is invalid or missing properties")

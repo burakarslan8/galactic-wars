@@ -1,6 +1,7 @@
 class_name Weapon
 extends Node2D
 
+@export var bullet_scene: PackedScene
 @export var attack_speed: float = 5.0
 @export var damage: float = 10
 @export var range: float = 2000.0
@@ -17,7 +18,6 @@ func handle_shooting(delta: float) -> void:
 		time_since_last_shot = 0.0
 
 func shoot() -> void:
-	var bullet_scene = preload("res://Scenes/Bullet.tscn")
 	var bullet = bullet_scene.instantiate()
 	var game = get_tree().get_root().get_node("Game")
 	game.add_child(bullet)
@@ -29,3 +29,13 @@ func shoot() -> void:
 	bullet.rotation = global_rotation
 
 	bullet.initialize_bullet(Vector2.RIGHT.rotated(global_rotation), self)
+
+func update_bullet(new_bullet_scene: PackedScene):
+	bullet_scene = new_bullet_scene
+	print("Updated bullet to new type")
+
+func get_total_damage() -> float:
+	var player = get_tree().get_root().get_node("Game/Player")
+	if player:
+		return damage + player.base_damage
+	return damage

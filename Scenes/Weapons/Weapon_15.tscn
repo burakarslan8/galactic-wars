@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://nlnhsn3uxndq"]
+
+[ext_resource type="Script" path="res://Scripts/Weapon.gd" id="1_jrjn6"]
+[ext_resource type="Texture2D" uid="uid://b4buj5t8ol206" path="res://Assets/weapon_3.png" id="2_ikjn0"]
+[ext_resource type="PackedScene" uid="uid://dyurgo7fjhajs" path="res://Scenes/Bullets/Bullet_15.tscn" id="2_m1d73"]
+
+[node name="Weapon_10" type="Node2D"]
+script = ExtResource("1_jrjn6")
+bullet_scene = ExtResource("2_m1d73")
+attack_speed = 10.0
+damage = 40.0
+range = 4000.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_ikjn0")
