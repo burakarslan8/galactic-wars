@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://soi130tm024a"]
+[gd_scene load_steps=11 format=3 uid="uid://soi130tm024a"]
 
 [ext_resource type="Script" path="res://Scripts/Game.gd" id="1_vpyda"]
 [ext_resource type="PackedScene" uid="uid://d2j8xaq24vu07" path="res://Scenes/Player.tscn" id="2_pqsoq"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://emom64bknfop" path="res://Scenes/GUI.tscn" id="6_et4ge"]
 [ext_resource type="PackedScene" uid="uid://cru12l8q7labf" path="res://Scenes/MeteorSpawner.tscn" id="7_w51o3"]
 [ext_resource type="PackedScene" uid="uid://cnt2ck3xv7h0g" path="res://Scenes/GameOver.tscn" id="8_tc0lp"]
+[ext_resource type="AudioStream" uid="uid://6ivaoe1ujicn" path="res://Audio/battleThemeA.mp3" id="9_gr3wt"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vypnv"]
 
@@ -47,3 +48,10 @@ points = PackedVector2Array(-5000, -4999, -5000, 5000, 5000, 5000, 5000, -5000)
 closed = true
 width = 20.0
 default_color = Color(0.767361, 0, 0.223266, 1)
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("9_gr3wt")
+volume_db = -10.0
+autoplay = true
+max_distance = 10000.0
+attenuation = 0.000113896

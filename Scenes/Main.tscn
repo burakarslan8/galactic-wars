@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://rehv5yw0umpd"]
+[gd_scene load_steps=5 format=3 uid="uid://rehv5yw0umpd"]
 
 [ext_resource type="Script" path="res://Scripts/Main.gd" id="1_s1ueb"]
 [ext_resource type="Texture2D" uid="uid://cerre558uhq37" path="res://Assets/main_menu_bg.png" id="2_euc38"]
+[ext_resource type="FontFile" uid="uid://balbcmuoccarq" path="res://Fonts/SpeedyRegular-7BLoE.ttf" id="3_20gd5"]
 
 [sub_resource type="GDScript" id="GDScript_oqsna"]
 script/source = "extends Node2D
@@ -50,8 +51,9 @@ offset_left = 1286.0
 offset_top = 1170.0
 offset_right = 1686.0
 offset_bottom = 1342.0
+theme_override_fonts/font = ExtResource("3_20gd5")
 theme_override_font_sizes/font_size = 64
-text = "Play"
+text = "PLAY"
 metadata/_edit_use_anchors_ = true
 
 [node name="SettingsButton" type="Button" parent="."]
@@ -60,8 +62,9 @@ offset_left = 1286.0
 offset_top = 1370.0
 offset_right = 1686.0
 offset_bottom = 1542.0
+theme_override_fonts/font = ExtResource("3_20gd5")
 theme_override_font_sizes/font_size = 64
-text = "Settings"
+text = "SETTINGS"
 metadata/_edit_use_anchors_ = true
 
 [node name="ExitButton" type="Button" parent="."]
@@ -70,8 +73,9 @@ offset_left = 1286.0
 offset_top = 1570.0
 offset_right = 1686.0
 offset_bottom = 1742.0
+theme_override_fonts/font = ExtResource("3_20gd5")
 theme_override_font_sizes/font_size = 64
-text = "Exit"
+text = "EXIT"
 metadata/_edit_use_anchors_ = true
 
 [connection signal="pressed" from="Button" to="Control" method="_on_button_pressed"]

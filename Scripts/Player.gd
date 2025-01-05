@@ -23,12 +23,17 @@ var current_health = 0
 var max_health = 100
 var speed = 700
 var base_damage = 1.0
+var shield_active: bool = false
+var damage_multiplier: float = 1.0
+var speed_multiplier: float = 1.0
 
 var stat_increase_per_level = {
 	"health": 5,
 	"speed": 10,
 	"damage": 0.5
 }
+
+@onready var shield_visual = $ShieldVisual
 
 func _ready() -> void:
 	camera = $Camera2D
@@ -59,7 +64,7 @@ func _process(delta):
 		velocity.x -= 1
 	if Input.is_action_pressed("ui_right"):
 		velocity.x += 1
-	velocity = velocity.normalized() * speed
+	velocity = velocity.normalized() * speed * speed_multiplier
 	move_and_slide()
 	rotate_towards_mouse()
 	
@@ -81,7 +86,7 @@ func spawn_ship(level):
 			current_ship = self
 		
 		for child in current_ship.get_children():
-			if child is Sprite2D or child is CollisionShape2D or child.name.begins_with("Weapon"):
+			if child.name == "Sprite2D" or child is CollisionShape2D or child.name.begins_with("Weapon"):
 				child.call_deferred("queue_free")
 		
 		for bullet in get_tree().get_nodes_in_group("Bullets"):
@@ -107,6 +112,9 @@ func _regenerate_health():
 		health_bar.value = current_health
 
 func take_damage(amount):
+	if shield_active:
+		print("Shield blocked the damage!")
+		return 
 	current_health -= amount
 	health_bar.value = current_health
 	if current_health <= 0:
@@ -145,3 +153,50 @@ func apply_stat_increase():
 	health_bar.value = current_health
 
 	print("Stats upgraded: Health:", max_health, "Speed:", speed, "Damage:", base_damage)
+
+func activate_shield(duration: float):
+	if shield_active:
+		return
+	shield_active = true
+	shield_visual.visible = true
+
+	print("Shield activated for", duration, "seconds")
+	var timer = Timer.new()
+	timer.wait_time = duration
+	timer.one_shot = true
+	timer.connect("timeout", Callable(self, "_deactivate_shield"))
+	add_child(timer)
+	timer.start()
+
+func _deactivate_shield():
+	shield_active = false
+	shield_visual.visible = false
+	print("Shield expired")
+
+func boost_damage(multiplier: float, duration: float):
+	damage_multiplier *= multiplier
+	print("Damage boosted: x" + str(damage_multiplier))
+	var timer = Timer.new()
+	timer.wait_time = duration
+	timer.one_shot = true
+	timer.connect("timeout", Callable(self, "_reset_damage"))
+	add_child(timer)
+	timer.start()
+
+func boost_speed(multiplier: float, duration: float):
+	speed_multiplier *= multiplier
+	print("Speed boosted: x" + str(speed_multiplier))
+	var timer = Timer.new()
+	timer.wait_time = duration
+	timer.one_shot = true
+	timer.connect("timeout", Callable(self, "_reset_speed"))
+	add_child(timer)
+	timer.start()
+
+func _reset_damage():
+	damage_multiplier = 1.0
+	print("Damage boost expired")
+
+func _reset_speed():
+	speed_multiplier = 1.0
+	print("Speed boost expired")

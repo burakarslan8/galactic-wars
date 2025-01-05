@@ -37,5 +37,5 @@ func update_bullet(new_bullet_scene: PackedScene):
 func get_total_damage() -> float:
 	var player = get_tree().get_root().get_node("Game/Player")
 	if player:
-		return damage + player.base_damage
+		return (damage + player.base_damage) * player.damage_multiplier
 	return damage

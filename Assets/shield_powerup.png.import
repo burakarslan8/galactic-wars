@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ckamankmpfpfo"
-path="res://.godot/imported/navigation_e.png-8cf7e00219154d6094d2f9817a0cb02d.ctex"
+uid="uid://cwhdipb687ida"
+path="res://.godot/imported/shield_powerup.png-d6baa142c39f6f27889714cd4d2e3949.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/navigation_e.png"
-dest_files=["res://.godot/imported/navigation_e.png-8cf7e00219154d6094d2f9817a0cb02d.ctex"]
+source_file="res://Assets/shield_powerup.png"
+dest_files=["res://.godot/imported/shield_powerup.png-d6baa142c39f6f27889714cd4d2e3949.ctex"]
 
 [params]
 

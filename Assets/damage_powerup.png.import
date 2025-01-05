@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c3ocvp1x4g4gt"
-path="res://.godot/imported/upscaled_main_ship.png-76c926bb10f795c80584060374ef7164.ctex"
+uid="uid://5tk4r0eluvxg"
+path="res://.godot/imported/damage_powerup.png-f2627a0f19be6febc15a2d06bc4ae4dc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/upscaled_main_ship.png"
-dest_files=["res://.godot/imported/upscaled_main_ship.png-76c926bb10f795c80584060374ef7164.ctex"]
+source_file="res://Assets/damage_powerup.png"
+dest_files=["res://.godot/imported/damage_powerup.png-f2627a0f19be6febc15a2d06bc4ae4dc.ctex"]
 
 [params]
 

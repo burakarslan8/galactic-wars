@@ -5,7 +5,7 @@ extends Area2D
 @export var speed: float = 350
 var player: Node2D = null
 @onready var health_bar = $HealthBar
-
+var death_animation = preload("res://Scenes/Explosion.tscn")
 signal died(killed_by_player: bool)
 
 var killed_by_player: bool = false
@@ -47,15 +47,21 @@ func die():
 	call_deferred("_remove_self")
 
 func _remove_self():
+	var mob_death=death_animation.instantiate()
+	mob_death.global_position=global_position
+	get_parent().call_deferred("add_child", mob_death)
+	
 	if killed_by_player:
 		_spawn_xp_drop()
-
 	queue_free()
 
 func _on_body_entered(body):
 	if body.name == "Player":
 		body.take_damage(damage)
-		killed_by_player = false
+		if body.shield_active:
+			killed_by_player = true
+		else:
+			killed_by_player = false
 		die()
 
 func _spawn_xp_drop():

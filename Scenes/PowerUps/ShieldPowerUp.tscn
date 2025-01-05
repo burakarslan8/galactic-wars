@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://ceex2gmeoft8f"]
+
+[ext_resource type="Script" path="res://Scripts/PowerUp.gd" id="1_vg282"]
+[ext_resource type="Texture2D" uid="uid://cwhdipb687ida" path="res://Assets/shield_powerup.png" id="2_drl4h"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t0iks"]
+
+[node name="PowerUp" type="Area2D"]
+collision_layer = 32
+collision_mask = 4
+script = ExtResource("1_vg282")
+effect_type = "shield"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_drl4h")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(5, 5)
+shape = SubResource("RectangleShape2D_t0iks")

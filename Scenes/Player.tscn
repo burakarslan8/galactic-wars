@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://d2j8xaq24vu07"]
+[gd_scene load_steps=6 format=3 uid="uid://d2j8xaq24vu07"]
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_4fv6r"]
 [ext_resource type="Texture2D" uid="uid://btkkem785v23s" path="res://Assets/ship_1.png" id="2_27xv3"]
@@ -6,6 +6,8 @@
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8dd8n"]
 radius = 152.591
+
+[sub_resource type="MeshTexture" id="MeshTexture_aj3po"]
 
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 4
@@ -16,7 +18,7 @@ script = ExtResource("1_4fv6r")
 texture = ExtResource("2_27xv3")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(1, 6)
+position = Vector2(5.96046e-08, -4.76837e-07)
 scale = Vector2(0.63513, 0.440001)
 shape = SubResource("CircleShape2D_8dd8n")
 
@@ -26,3 +28,8 @@ zoom = Vector2(0.8, 0.8)
 [node name="Weapon" parent="." instance=ExtResource("3_0tgjh")]
 show_behind_parent = true
 position = Vector2(72, 1)
+
+[node name="ShieldVisual" type="Sprite2D" parent="."]
+position = Vector2(-277, -219)
+scale = Vector2(598, 393)
+texture = SubResource("MeshTexture_aj3po")
