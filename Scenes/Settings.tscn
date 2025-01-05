@@ -50,7 +50,7 @@ offset_bottom = 432.0
 theme_type_variation = &"HeaderLarge"
 theme_override_fonts/font = ExtResource("3_q50n7")
 theme_override_font_sizes/font_size = 30
-text = "Background Music"
+text = "Audio"
 horizontal_alignment = 1
 
 [node name="HSlider" type="HSlider" parent="."]
