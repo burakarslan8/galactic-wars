@@ -1,10 +1,50 @@
-[gd_scene load_steps=4 format=3 uid="uid://djddcjmjojcp6"]
+[gd_scene load_steps=8 format=3 uid="uid://djddcjmjojcp6"]
 
 [ext_resource type="Script" path="res://Scripts/Bullet.gd" id="1_vg3dm"]
-[ext_resource type="Texture2D" uid="uid://bq4h6o8ve5x80" path="res://Assets/bullet_2.png" id="2_aqerd"]
+[ext_resource type="Texture2D" uid="uid://dqfvoft57vxom" path="res://Assets/Fx_01.png" id="2_otqcv"]
+[ext_resource type="AudioStream" uid="uid://dakgha3oiel5t" path="res://Audio/laser.ogg" id="3_ayb1q"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kpvtr"]
 size = Vector2(15.7546, 8.15217)
+
+[sub_resource type="Animation" id="Animation_6pa5c"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_c8igb"]
+resource_name = "bullet5"
+length = 0.3
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 1]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7n5og"]
+_data = {
+"RESET": SubResource("Animation_6pa5c"),
+"bullet5": SubResource("Animation_c8igb")
+}
 
 [node name="Bullet" type="Area2D"]
 collision_mask = 10
@@ -15,4 +55,17 @@ scale = Vector2(2.03115, 1.84)
 shape = SubResource("RectangleShape2D_kpvtr")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_aqerd")
+scale = Vector2(3.563, 3.563)
+texture = ExtResource("2_otqcv")
+hframes = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_7n5og")
+}
+autoplay = "bullet5"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_ayb1q")
+volume_db = -10.0
+autoplay = true
